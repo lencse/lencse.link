@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+[ `du -sm logs | cut -f1` -gt 100 ] && node_modules/.bin/chalk -t '{yellow.bold WARNING: `logs/` dir is >100 MB, consider cleaning it}' || :

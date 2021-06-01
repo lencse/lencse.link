@@ -1,0 +1,10 @@
+{
+    "engines": {
+        "node": "^16"
+    },
+    "dependencies": {
+        "db-migrate": "^0.11.12",
+        "db-migrate-pg": "^1.2.2",
+        "pg": "^8.6.0"
+    }
+}

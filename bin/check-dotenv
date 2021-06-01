@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ ! -f .env ]; then
+    make .env
+    node_modules/.bin/chalk -t '{yellow INFO:} .env file created, please rerun {green.bold `make dev`}'
+    exit -1
+fi

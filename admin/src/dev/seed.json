@@ -1,0 +1,27 @@
+{
+    "users": [
+        {
+            "email": "admin@test.link",
+            "username": "admin",
+            "password": "ALittleDummyPassword"
+        }
+    ],
+    "links": [
+        {
+            "shortLink": "gh",
+            "redirectTo": "https://github.com"
+        },
+        {
+            "shortLink": "lencse",
+            "redirectTo": "https://lencse.io"
+        },
+        {
+            "shortLink": "shortener",
+            "redirectTo": "https://lencse.link"
+        },
+        {
+            "shortLink": "shortener-repo",
+            "redirectTo": "https://github.com/lencse/lencse.link"
+        }
+    ]
+}

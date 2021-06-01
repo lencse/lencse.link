@@ -1,0 +1,12 @@
+{
+    "name": "lencse.link",
+    "author": "Lencse <leventeloki@gmail.com>",
+    "license": "MIT",
+    "engines": {
+        "node": "^16"
+    },
+    "devDependencies": {
+        "chalk-cli": "^4.1.0",
+        "concurrently": "^6.2.0"
+    }
+}

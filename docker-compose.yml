@@ -1,0 +1,44 @@
+version: '3.9'
+services:
+  admin:
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+      MAIN_URL: http://localhost:5100
+      MAIN_INTERNAL_URL: http://main_service:3000
+      JWT_SECRET: "My baby's got a secret"
+    build: ./admin
+    ports:
+      - 5101:3000
+    volumes:
+      - /Users/lokilevente/Library/Caches/Yarn/v6:/usr/local/share/.cache/yarn/v6
+    #   - /tmp/admin-node:/app/node_modules
+    links:
+      - db
+      - main_service
+  main_service:
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+    build: ./main
+    ports:
+      - 5100:3000
+    volumes:
+      - /Users/lokilevente/Library/Caches/Yarn/v6:/usr/local/share/.cache/yarn/v6
+    #   - /tmp/main-node:/app/node_modules
+    links:
+      - db
+  migration:
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+    build: ./db
+    volumes:
+      - /Users/lokilevente/Library/Caches/Yarn/v6:/usr/local/share/.cache/yarn/v6
+    #   - /tmp/migration-node:/app/node_modules
+    links:
+      - db
+  db:
+    image: postgres:latest
+    ports:
+      - 5110:5432
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres

@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const { Pool } = require('pg')
+const { setTimeout } = require('timers/promises')
+
+async function waitForDb() {
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+
+    pool.on('error', err => {
+        console.error('[DB error]', err)
+        process.exit(-1)
+    })
+
+    console.info('[INFO]', 'Waiting for DB...')
+
+    while (true) {
+        try {
+            const client = await pool.connect()
+            console.info('[INFO]', 'DB is up')
+            await client.release()
+            process.exit(0)
+        } catch (err) {
+            await setTimeout(100)
+        }
+    }
+}
+
+waitForDb()
