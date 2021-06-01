@@ -17,6 +17,7 @@ export async function connection(): Promise<DbConnection> {
 
     if (null === client) {
         client = await pool.connect()
+        process.on('exit', () => client?.release())
     }
 
     return {

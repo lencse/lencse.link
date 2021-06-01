@@ -13,10 +13,12 @@ export async function connection(): Promise<DbConnection> {
             console.error('[DB error]', err)
             process.exit(-1)
         })
+
     }
 
     if (null === client) {
         client = await pool.connect()
+        process.on('exit', () => client?.release())
     }
 
     return {
