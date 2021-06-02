@@ -2,9 +2,14 @@
 
 const { Pool } = require('pg')
 const { setTimeout } = require('timers/promises')
+const assert = require('assert').strict
+
+const dbUrl = String(process.env.DATABASE_URL ?? '')
+
+assert('' !== dbUrl)
 
 async function waitForDb() {
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+    const pool = new Pool({ connectionString: dbUrl })
 
     pool.on('error', err => {
         console.error('[DB error]', err)

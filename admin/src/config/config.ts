@@ -1,6 +1,6 @@
 const config = {
     api: {
-        paging: 100
+        // paging: 100
     }
 }
 

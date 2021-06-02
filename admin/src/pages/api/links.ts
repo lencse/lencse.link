@@ -6,6 +6,7 @@ import { connection } from '../../db'
 import config from '../../config/config'
 import { v4 as uuid, validate } from 'uuid'
 import { User } from '../../user/types'
+import env from '../../config/env'
 // import Router from 'koa-router'
 
 async function handleTokenAndGetUser(req: NextApiRequest, res: NextApiResponse): Promise<User | false> {
@@ -64,7 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         const result = await db.getLinks({
-            pagination: { page, pageSize: config.api.paging },
+            pagination: { page, pageSize: env.dashboard.pageSize },
             orderBy: { field: matches[1], order: matches[2] },
         })
         res.status(200).json(result)

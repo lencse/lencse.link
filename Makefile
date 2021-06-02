@@ -6,6 +6,7 @@
 	seed
 	sql
 	sh
+	node
 	check_dotenv dev_db wait_for_db check_dev_log_size generate_seed_data
 
 ifneq (,$(wildcard ./.env))
@@ -88,3 +89,6 @@ check_dotenv: node_modules
 
 sh:
 	sh
+
+node:
+	node
