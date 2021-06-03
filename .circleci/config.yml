@@ -14,21 +14,21 @@ jobs:
           version: 20.10.2
           docker_layer_caching: false
 
-      - run:
-          name: Build main service
-          command: cd main ; make docker
+    #   - run:
+    #       name: Build main service
+    #       command: cd main ; make docker
 
-      - run:
-          name: Build admin service
-          command: cd admin ; make docker
+    #   - run:
+    #       name: Build admin service
+    #       command: cd admin ; make docker
 
-      - run:
-          name: Build migration service
-          command: cd db ; make docker
+    #   - run:
+    #       name: Build migration service
+    #       command: cd db ; make docker
 
       - run:
           name: Run containers
-          command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://localhost:5201
+          command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://admin:3000
 
 
     #   # build and push Docker image
