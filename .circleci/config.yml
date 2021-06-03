@@ -1,0 +1,19 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:16.2
+        # auth:
+        #   username: mydockerhub-user
+        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+      # ... steps for building/testing app ...
+
+      - setup_remote_docker:
+          version: 20.10.2
+          docker_layer_caching: false
+
+      # build and push Docker image
+      - run: |
+          docker run -d --network container:my-app -v $(pwd)/.circleci/test:/usr/share/nginx/html:ro nginx:alpine
