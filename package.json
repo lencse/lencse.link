@@ -7,6 +7,7 @@
     },
     "devDependencies": {
         "chalk-cli": "^4.1.0",
-        "concurrently": "^6.2.0"
+        "concurrently": "^6.2.0",
+        "cypress": "^7.4.0"
     }
 }

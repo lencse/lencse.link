@@ -8,6 +8,7 @@
 	sh
 	node
 	docker_build
+	docker_run
 	check_dotenv dev_db wait_for_db check_dev_log_size generate_seed_data
 
 ifneq (,$(wildcard ./.env))
@@ -90,6 +91,11 @@ sh:
 
 node:
 	node
+
+docker_build:
+	cd admin ; make docker
+	cd main ; make docker
+	cd db ; make docker
 
 docker_run:
 	docker network create lencse-link-test && \
