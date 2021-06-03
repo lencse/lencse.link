@@ -19,6 +19,7 @@ export async function connection(): Promise<DbConnection> {
     }
 
     const getClient = async (): Promise<any> => {
+        console.log('DB CONN')
         if (null === client) {
             if (semaphore) {
                 while (await setImmediate(true)) {

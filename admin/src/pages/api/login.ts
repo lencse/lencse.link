@@ -1,8 +1,11 @@
 import { AuthenticationError, validateAndGetUser, createToken } from '../../user'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { serialize } from 'cookie'
+import { connection } from '../../db'
+import config from '../../config/config'
+import { UserByEmail, UserDb } from '../../user/repository'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const loginHandler = (db: UserByEmail, secret: string) => async (req: NextApiRequest, res: NextApiResponse) => {
     if ('POST' !== req.method) {
         res.status(405).setHeader('Allow', 'POST').send('Method not allowed.')
         return
@@ -13,8 +16,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return
     }
     try {
-        const user = await validateAndGetUser(email, password)
-        const token = createToken(user)
+        const user = await validateAndGetUser(db)({ email, password })
+        const token = createToken(secret)(user)
         res.setHeader('Set-Cookie', serialize('token', token, {
             path: '/',
             httpOnly: true,
@@ -30,6 +33,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const redirectTo = new URL('/', `https://${req.headers.host}`)
         redirectTo.searchParams.set('err', err.message)
         res.redirect(redirectTo.toString().split(req.headers.host).pop())
-        return
     }
+
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    loginHandler(
+        new UserDb(await connection()),
+        config.jwt.secret
+    )(req, res)
 }

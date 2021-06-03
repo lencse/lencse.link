@@ -8,7 +8,6 @@ jobs:
         #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      # ... steps for building/testing app ...
 
       - setup_remote_docker:
           version: 20.10.2

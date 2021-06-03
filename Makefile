@@ -9,6 +9,9 @@
 	node
 	docker_build
 	docker_run
+	test
+	watch_test
+	test_compiled
 	check_dotenv dev_db wait_for_db check_dev_log_size generate_seed_data
 
 ifneq (,$(wildcard ./.env))
@@ -32,6 +35,15 @@ main/node_modules: main/package.json main/yarn.lock
 db/node_modules: db/package.json db/yarn.lock
 	cd db; yarn && touch node_modules
 
+test: admin/node_modules main/node_modules db/node_modules
+	cd admin ; ${BIN}/jest --verbose
+
+watch_test: admin/node_modules main/node_modules db/node_modules
+	cd admin ; $(BIN)/jest -c jest.compiled.config.js --verbose --watch
+
+test_compiled: admin/node_modules main/node_modules db/node_modules
+	cd admin ; $(BIN)/jest -c jest.compiled.config.js --verbose
+
 logs:
 	mkdir -p logs
 
@@ -43,6 +55,7 @@ init_dev: .env
 dev: node_modules admin/node_modules main/node_modules db/node_modules logs
 	make check_dotenv
 	make check_dev_log_size
+	echo ${DATABASE_URL}
 	$(BIN)/concurrently \
 		-n db,admin,admin-ts,main,main-ts \
 		-c bgYellow,bgBlue,bgCyan,bgMagenta,bgWhite \

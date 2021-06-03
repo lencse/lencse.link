@@ -13,6 +13,12 @@ export interface UserRepository {
 
 }
 
+export interface UserByEmail {
+
+    getByEmail(email: string): Promise<UserWithHashedPassword[]>
+
+}
+
 export class UserDb implements UserRepository {
 
     constructor(private db: DbQuery) { }
