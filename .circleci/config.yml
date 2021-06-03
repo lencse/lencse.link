@@ -24,7 +24,9 @@ jobs:
 
       - run:
           name: Build migration service
-          command: cd migration ; make docker
+          command: cd db ; make docker
+
+          
     #   # build and push Docker image
     #   - run: |
     #       docker run -d --network container:my-app -v $(pwd)/.circleci/test:/usr/share/nginx/html:ro nginx:alpine
