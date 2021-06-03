@@ -14,7 +14,17 @@ jobs:
           version: 20.10.2
           docker_layer_caching: false
 
-      - run: make docker_build
+      - run:
+          name: Build main service
+          command: cd main ; make docker
+
+      - run:
+          name: Build admin service
+          command: cd admin ; make docker
+
+      - run:
+          name: Build migration service
+          command: cd migration ; make docker
     #   # build and push Docker image
     #   - run: |
     #       docker run -d --network container:my-app -v $(pwd)/.circleci/test:/usr/share/nginx/html:ro nginx:alpine

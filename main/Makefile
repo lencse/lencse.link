@@ -1,3 +1,5 @@
+.PHONY: docker
+
 default: build
 
 build: node_modules
@@ -5,3 +7,6 @@ build: node_modules
 
 node_modules:
 	yarn
+
+docker:
+	docker build -t lencse/test-lencse-link-main --no-cache --progress plain .

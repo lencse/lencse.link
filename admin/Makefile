@@ -1,4 +1,4 @@
-.PHONY: seed
+.PHONY: seed docker
 
 default: .next build .seed.json
 
@@ -16,3 +16,6 @@ node_modules:
 
 seed: .seed.json
 	bin/save-seed
+
+docker:
+	docker build -t lencse/test-lencse-link-admin --no-cache --progress plain .

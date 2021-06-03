@@ -2,6 +2,7 @@
 	wait_for_db
 	migrate
 	migrate_reset
+	docker
 
 BIN=node_modules/.bin
 
@@ -16,3 +17,6 @@ migrate_reset: node_modules
 
 wait_for_db: node_modules
 	bin/wait-for-db
+
+docker:
+	docker build -t lencse/test-lencse-link-migration --no-cache --progress plain .
