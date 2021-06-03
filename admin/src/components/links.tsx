@@ -82,9 +82,11 @@ export default class Links extends React.Component<LinksProps, LinksState> {
         //         }))
         //     }
         // })
-        axios.get('/api/run-config').then(res => this.setState({config: {
-            ...res.data
-        }}))
+        axios.get('/api/run-config').then(res => this.setState({
+            config: {
+                ...res.data
+            }
+        }))
         this.props.reloadRequest.on('shouldReload', () => this.reloader())
     }
 
@@ -167,17 +169,17 @@ export default class Links extends React.Component<LinksProps, LinksState> {
                                             className='text-yellow-500'
                                         >
                                             {link.redirectTo}
+                                            <UrlChecker url={link.redirectTo} className={c(
+                                                'inline-block',
+                                                'pl-2',
+                                                'relative',
+                                                'top-px'
+                                            )} />
                                         </a>
-                                        <UrlChecker url={link.redirectTo} className={c(
-                                            'inline-block',
-                                            'pl-2',
-                                            'relative',
-                                            'top-px'
-                                        )} />
                                     </td>
                                     <td className={'p-2 block sm:table-cell'}>{link.user.username}</td>
                                     <td className={'p-2 block sm:table-cell min-w-min whitespace-nowrap'}>
-                                        { dayjs(link.creationDate).format('D MMM YYYY, HH:mm') }
+                                        {dayjs(link.creationDate).format('D MMM YYYY, HH:mm')}
                                     </td>
                                     <td className={'p-2 block sm:table-cell'}>{link.hitCount}</td>
                                 </tr>)
