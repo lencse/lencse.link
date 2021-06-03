@@ -12,7 +12,7 @@ import axios from 'axios'
 import AddLink from '../components/add-link'
 import EventEmitter from 'events'
 import c from 'classnames'
-import env from '../config/env'
+import config from '../config/config'
 
 type Data = {
     links: LinkData[]

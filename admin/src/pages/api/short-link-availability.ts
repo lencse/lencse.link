@@ -6,7 +6,7 @@ import { connection } from '../../db'
 import { v4 as uuid, validate } from 'uuid'
 import { User } from '../../user/types'
 import axios from 'axios'
-import env from '../../config/env'
+import config from '../../config/config'
 import { checkAvailability } from '../../link/availability'
 import { setTimeout} from 'timers/promises'
 

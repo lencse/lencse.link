@@ -3,10 +3,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { serialize } from 'cookie'
 import { LinkDb, ShortLinkDuplicationError } from '../../link/repository'
 import { connection } from '../../db'
-import config from '../../config/config'
 import { v4 as uuid, validate } from 'uuid'
 import { User } from '../../user/types'
-import env from '../../config/env'
+import config from '../../config/config'
 // import Router from 'koa-router'
 
 async function handleTokenAndGetUser(req: NextApiRequest, res: NextApiResponse): Promise<User | false> {
@@ -65,7 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         const result = await db.getLinks({
-            pagination: { page, pageSize: env.dashboard.pageSize },
+            pagination: { page, pageSize: config.dashboard.pageSize },
             orderBy: { field: matches[1], order: matches[2] },
         })
         res.status(200).json(result)

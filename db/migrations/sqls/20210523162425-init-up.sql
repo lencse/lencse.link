@@ -1,3 +1,11 @@
+CREATE TABLE app_config(
+    config_name             VARCHAR(1024) NOT NULL,
+    config_value            VARCHAR(1024),
+    UNIQUE (config_name)
+);
+
+----
+
 CREATE TABLE users(
     id                      UUID PRIMARY KEY,
     email                   VARCHAR(1024) NOT NULL,

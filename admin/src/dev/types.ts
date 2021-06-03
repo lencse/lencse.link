@@ -1,7 +1,7 @@
 import { LinkToSave } from "../link/types";
-import { UserWithHashedPassword } from "../user/types";
+import { User, UserWithHashedPassword } from "../user/types";
 
 export type SeedData = {
-    users: (UserWithHashedPassword & { deactivated: boolean })[]
+    users: (User & { deactivated: boolean, password: string })[]
     links:  (LinkToSave & { deleted: boolean })[]
 }

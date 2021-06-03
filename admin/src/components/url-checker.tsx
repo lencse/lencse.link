@@ -19,6 +19,7 @@ type UrlCheckerState = {
 
 type UrlCheckerViewportProps = UrlCheckerProps & {
     inViewPortNotifier: EventEmitter
+    inViewport?: boolean
 }
 
 class UrlCheckerViewport extends React.Component<UrlCheckerViewportProps, UrlCheckerState> {
@@ -30,6 +31,10 @@ class UrlCheckerViewport extends React.Component<UrlCheckerViewportProps, UrlChe
             found: false
         }
         props.inViewPortNotifier.on('inViewport', () => this.checkUrl())
+    }
+
+    componentDidMount() {
+        console.log(this.props.url, this.props.inViewport)
     }
 
     private async checkUrl() {
@@ -72,13 +77,13 @@ const UrlCheckerInViewport = handleViewport<UrlCheckerViewportProps>(UrlCheckerV
 
 const UrlChecker = (props: UrlCheckerProps) => {
     const emitter = new EventEmitter()
-    return <>
+    return (
         <UrlCheckerInViewport
             onEnterViewport={() => emitter.emit('inViewport')}
             inViewPortNotifier={emitter}
             {...props}
         />
-    </>
+    )
 }
 
 export default UrlChecker

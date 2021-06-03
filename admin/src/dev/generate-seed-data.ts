@@ -1,4 +1,3 @@
-import argon2 from 'argon2'
 import { v4 as uuid } from 'uuid'
 import { connection } from '../db/index.js'
 import { UserDb } from '../user/repository'
@@ -6,7 +5,7 @@ import { LinkDb } from '../link/repository'
 import seed from './seed.json'
 import { internet, lorem, random, datatype } from 'faker'
 import { range } from 'lodash'
-import { UserData, UserWithHashedPassword } from '../user/types.js'
+import { User, UserData, UserWithHashedPassword } from '../user/types.js'
 import { LinkToSave } from '../link/types.js'
 import { link } from 'fs'
 import { writeFile} from 'fs/promises'
@@ -15,8 +14,13 @@ import { resolve } from 'path'
 const USER_COUNT = 20
 const LINK_COUNT = 1000
 
+type UserToSave = User & {
+    password: string
+    deactivated: boolean
+}
+
 export async function main() {
-    const userSampleData: (UserWithHashedPassword & { deactivated: boolean })[] = []
+    const userSampleData: UserToSave[] = []
     const usernames = new Set<string>()
     const emails = new Set<string>()
     for (let i = 0; i < USER_COUNT; ++i) {
@@ -34,7 +38,7 @@ export async function main() {
             id: uuid(),
             username,
             email,
-            hashedPassword: await argon2.hash(internet.password(), {}),
+            password: internet.password(),
             deactivated: datatype.number(5) < 1,
         })
     }
@@ -42,7 +46,7 @@ export async function main() {
         id: uuid(),
         username: user.username,
         email: user.email,
-        hashedPassword: await argon2.hash(user.password, {}),
+        password: user.password,
         deactivated: false,
     }))))
     const userIds = users.map(user => user.id)
@@ -58,7 +62,7 @@ export async function main() {
         linkSampleData.push({
             id: uuid(),
             shortLink,
-            redirectTo: internet.url() + (datatype.number(4) < 1 ? `/${lorem.slug()}` : ''),
+            redirectTo: internet.url() + (datatype.number(4) < 1 ? `/${lorem.slug(3 + datatype.number(12))}` : ''),
             userId: random.arrayElement(userIds),
             deleted: datatype.number(20) < 1,
         })

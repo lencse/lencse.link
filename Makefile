@@ -7,6 +7,7 @@
 	sql
 	sh
 	node
+	docker_build
 	check_dotenv dev_db wait_for_db check_dev_log_size generate_seed_data
 
 ifneq (,$(wildcard ./.env))
@@ -45,7 +46,7 @@ dev: node_modules admin/node_modules main/node_modules db/node_modules logs
 		-n db,admin,admin-ts,main,main-ts \
 		-c bgYellow,bgBlue,bgCyan,bgMagenta,bgWhite \
 		"make dev_db 2>&1 | tee -a logs/db.log" \
-		"(make wait_for_db && make migrate && (cd admin ; ${BIN}/next dev -p ${ADMIN_PORT})) 2>&1 | tee -a logs/admin.log" \
+		"(make wait_for_db && make migrate && make seed && (cd admin ; ${BIN}/next dev -p ${ADMIN_PORT})) 2>&1 | tee -a logs/admin.log" \
 		"(cd admin ; ${TSC}) 2>&1 | tee -a logs/admin-ts.log" \
 		"(make wait_for_db && (cd main ; PORT=${MAIN_PORT} $(BIN)/nodemon server.js)) 2>&1 | tee -a logs/main.log" \
 		"(cd main ; ${TSC}) 2>&1 | tee -a logs/main-ts.log"
@@ -73,10 +74,7 @@ sql:
 		docker exec -it ${DEV_DB_NAME} psql --username=${DB_USER} --command "$(SQL)"
 
 seed:
-	make migrate_reset
-	make migrate
-	cd admin ; make .seed.json
-	cd admin ; bin/save-seed
+	cd admin ; make seed
 
 generate_seed_data:
 	admin/bin/generate-seed-data
@@ -92,3 +90,8 @@ sh:
 
 node:
 	node
+
+docker_build:
+	docker build -t lencse/test-lencse-link-main --no-cache --progress plain ./main
+	docker build -t lencse/test-lencse-link-admin --no-cache --progress plain ./admin
+	docker build -t lencse/test-lencse-link-migration --no-cache --progress plain ./db

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import argon2 from 'argon2'
-import env from '../config/env'
+import config from '../config/config'
 import { User } from './types'
 import { UserDb } from './repository'
 import { connection } from '../db'
@@ -32,12 +32,12 @@ export async function validateAndGetUser(email: string, password: string): Promi
 }
 
 export function createToken(user: User): string {
-    return jwt.sign({ userId: user.id }, env.jwt.secret)
+    return jwt.sign({ userId: user.id }, config.jwt.secret)
 }
 
 export async function validateTokenAndGetUser(token: string): Promise<User> {
     try {
-        const data: any = jwt.verify(token, env.jwt.secret)
+        const data: any = jwt.verify(token, config.jwt.secret)
         const db = new UserDb(await connection())
         const rows = await db.getById(data.userId)
 

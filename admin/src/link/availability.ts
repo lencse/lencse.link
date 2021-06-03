@@ -1,5 +1,5 @@
 import axios from "axios"
-import env from "../config/env"
+import config from "../config/config"
 import { connection } from "../db"
 import { LinkDb } from "./repository"
 
@@ -8,7 +8,7 @@ export async function checkAvailability(shortLink: string): Promise<boolean> {
     if (await db.isShortLinkExisting(shortLink)) {
         return false
     }
-    const url = new URL(`${env.urls.mainServiceInternal}/${shortLink}`)
+    const url = new URL(`${config.urls.mainServiceInternal}/${shortLink}`)
     url.searchParams.append('nolog', '')
     const result = await axios.head(url.toString(), {
         validateStatus: () => true,

@@ -24,7 +24,8 @@
         "**/*.tsx"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        ".seed.json"
     ],
     "watchOptions": {
         "excludeDirectories": [

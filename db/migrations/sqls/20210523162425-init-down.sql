@@ -4,3 +4,4 @@ DROP TABLE hits;
 DROP TABLE links;
 DROP TABLE users;
 DROP SEQUENCE suggestion_s;
+DROP TABLE app_config;
