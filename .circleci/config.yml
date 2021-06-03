@@ -14,17 +14,17 @@ jobs:
           version: 20.10.2
           docker_layer_caching: false
 
-    #   - run:
-    #       name: Build main service
-    #       command: cd main ; make docker
+      - run:
+          name: Build main service
+          command: cd main ; make docker
 
-    #   - run:
-    #       name: Build admin service
-    #       command: cd admin ; make docker
+      - run:
+          name: Build admin service
+          command: cd admin ; make docker
 
-    #   - run:
-    #       name: Build migration service
-    #       command: cd db ; make docker
+      - run:
+          name: Build migration service
+          command: cd db ; make docker
 
       - run:
           name: Run containers
