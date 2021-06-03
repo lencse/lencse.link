@@ -26,7 +26,11 @@ jobs:
           name: Build migration service
           command: cd db ; make docker
 
-          
+      - run:
+          name: Run containers
+          command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://localhost:5201
+
+
     #   # build and push Docker image
     #   - run: |
     #       docker run -d --network container:my-app -v $(pwd)/.circleci/test:/usr/share/nginx/html:ro nginx:alpine
