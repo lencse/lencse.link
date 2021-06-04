@@ -27,6 +27,10 @@ export type QueryResult = {
     }
 }
 
+export interface ShortLinkExisting {
+    isShortLinkExisting(shortLink: string): Promise<boolean>
+}
+
 export interface LinkRepository {
 
     addLink(data: LinkToSave): Promise<Link>

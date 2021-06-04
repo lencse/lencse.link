@@ -1,18 +1,28 @@
 import axios from "axios"
 import config from "../config/config"
 import { connection } from "../db"
-import { LinkDb } from "./repository"
+import { LinkDb, LinkRepository, ShortLinkExisting } from "./repository"
 
-export async function checkAvailability(shortLink: string): Promise<boolean> {
-    const db = new LinkDb(await connection())
-    if (await db.isShortLinkExisting(shortLink)) {
-        return false
-    }
-    const url = new URL(`${config.urls.mainServiceInternal}/${shortLink}`)
-    url.searchParams.append('nolog', '')
-    const result = await axios.head(url.toString(), {
+export type HeadHttpRequestStatuscode = (url: string) => Promise<number>
+
+export const axiosHeadStatuscode: HeadHttpRequestStatuscode = async (url: string) => {
+    const { status } = await axios.head(url, {
         validateStatus: () => true,
         maxRedirects: 0,
     })
-    return 404 === result.status
+    return status
 }
+
+export const checkAvailability = (
+    db: ShortLinkExisting,
+    mainServiceUrl: string,
+    headStatusCode: HeadHttpRequestStatuscode
+) =>
+    async (shortLink: string): Promise<boolean> => {
+        if (await db.isShortLinkExisting(shortLink)) {
+            return false
+        }
+        const url = new URL(`${mainServiceUrl}/${shortLink}`)
+        url.searchParams.append('nolog', '')
+        return 404 === await headStatusCode(url.toString())
+    }

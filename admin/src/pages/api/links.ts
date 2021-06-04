@@ -6,37 +6,8 @@ import { connection } from '../../db'
 import { v4 as uuid, validate } from 'uuid'
 import { User } from '../../user/types'
 import config from '../../config/config'
-import { Context, ContextAfterAuth } from '../../api'
+import { Context, ContextAfterAuth, headHttpMethodMiddleware, userMiddleware, HandlerAfterAuthentication } from '../../api'
 import { UserByEmail, UserById, UserDb } from '../../user/repository'
-
-type HandlerAfterAuthentication = (ctx: ContextAfterAuth) => Promise<void>
-
-const userMiddleware = (db: UserById, secret: string) =>
-    async (ctx: Context, next: HandlerAfterAuthentication): Promise<void> => {
-        const { req, res } = ctx
-        const { token } = req.cookies
-        try {
-            const user = await validateToken(db, secret)(token)
-            return next({
-                ...ctx,
-                user
-            })
-        } catch (err) {
-            if ('TokenValidationError' === err.name) {
-                res.status(401)
-                res.send('Unauthorized.')
-                return
-            }
-            throw err
-        }
-    }
-
-async function headHttpMethodMiddleware(ctx: Context) {
-    if ('HEAD' === ctx.req.method) {
-        ctx.req.method = 'GET'
-        ctx.req.headers['original-method'] = 'HEAD'
-    }
-}
 
 const mainHandler = (db: LinkRepository): HandlerAfterAuthentication =>
     async (ctx) => {
