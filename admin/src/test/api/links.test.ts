@@ -100,15 +100,21 @@ describe('Links API', () => {
 
         expect(res.statusCode).toBe(201)
         const result = res._getJSONData().link
+
+        const { id, ...withoutId } = result
+        expect(withoutId).toEqual({
+            shortLink: 'test',
+            redirectTo: 'https://example.com',
+            userId: testUser.id
+        })
         expect(validate(result.id)).toBeTruthy()
-        expect(result.shortLink).toBe('test')
-        expect(result.redirectTo).toBe('https://example.com')
-        const { userId, ...rest} = result
+
+        const { userId, ...withoutUserId } = result
         expect([{
             ...linkRepo.links[0],
             creationDate: new Date(linkRepo.links[0].creationDate),
         }]).toEqual([{
-            ...rest,
+            ...withoutUserId,
             hitCount: 0,
             creationDate: timer.now,
             user: {
@@ -116,6 +122,63 @@ describe('Links API', () => {
                 isActive: true,
             }
         }])
+    })
+
+    it('Get links', async () => {
+        const userRepo = new UserTesRepository()
+        const linkRepo = new LinkTestRepository()
+        timer.now = new Date('2000-01-01T00:00:00Z')
+        linkRepo.addLink({
+            id: 'ID1',
+            shortLink: 'test1',
+            redirectTo: 'http://example.com',
+            userId: testUser.id
+        })
+        timer.now = new Date('2000-01-01T00:01:00Z')
+        linkRepo.addLink({
+            id: 'ID2',
+            shortLink: 'test1',
+            redirectTo: 'http://example.com/test',
+            userId: testUser.id
+        })
+        const { req, res } = createMocks({
+            method: 'GET',
+            headers: {
+                cookie: `token=${createToken('SECRET')(testUser)}`
+            }
+        })
+        await resolveHandler(req, res, linksHandler(userRepo, 'SECRET', linkRepo))
+
+        expect(res.statusCode).toBe(200)
+        const result = res._getJSONData().links
+        expect(result).toEqual([
+            {
+                id: 'ID1',
+                shortLink: 'test1',
+                redirectTo: 'http://example.com',
+                creationDate: '2000-01-01T00:00:00.000Z',
+                hitCount: 0,
+                user: {
+                    email: 'test@test.hu',
+                    id: 'TEST-ID',
+                    isActive: true,
+                    username: 'test'
+                }
+            },
+            {
+                id: 'ID2',
+                shortLink: 'test1',
+                redirectTo: 'http://example.com/test',
+                creationDate: '2000-01-01T00:01:00.000Z',
+                hitCount: 0,
+                user: {
+                    email: 'test@test.hu',
+                    id: 'TEST-ID',
+                    isActive: true,
+                    username: 'test'
+                }
+            }
+        ])
     })
 
 })
