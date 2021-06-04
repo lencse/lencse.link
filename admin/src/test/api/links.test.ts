@@ -124,6 +124,23 @@ describe('Links API', () => {
         }])
     })
 
+    it('Missing data from link creation', async () => {
+        const userRepo = new UserTesRepository()
+        const linkRepo = new LinkTestRepository()
+        const { req, res } = createMocks({
+            method: 'POST',
+            body: {
+                shortLink: 'test',
+            },
+            headers: {
+                cookie: `token=${createToken('SECRET')(testUser)}`
+            }
+        })
+        await resolveHandler(req, res, linksHandler(userRepo, 'SECRET', linkRepo))
+
+        expect(res.statusCode).toBe(400)
+    })
+
     it('Get links', async () => {
         const userRepo = new UserTesRepository()
         const linkRepo = new LinkTestRepository()
@@ -179,6 +196,22 @@ describe('Links API', () => {
                 }
             }
         ])
+    })
+
+    it('Wrong HTTP method', async () => {
+        const userRepo = new UserTesRepository()
+        const linkRepo = new LinkTestRepository()
+        const { req, res } = createMocks({
+            method: 'DELETE',
+            headers: {
+                cookie: `token=${createToken('SECRET')(testUser)}`
+            }
+        })
+        await resolveHandler(req, res, linksHandler(userRepo, 'SECRET', linkRepo))
+
+        expect(res.statusCode).toBe(405)
+        const headers = res.getHeaders()
+        expect(headers.allow).toBe('GET, POST')
     })
 
 })
