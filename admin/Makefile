@@ -1,4 +1,4 @@
-.PHONY: seed docker test test_compiled verify
+.PHONY: seed docker test test_compiled verify verify_seed_data
 
 default: build .next .seed.json
 
@@ -26,4 +26,7 @@ test: node_modules
 test_compiled: build
 	`yarn bin`/jest -c jest.compiled.config.js --verbose
 
-verify: test test_compiled
+verify_seed_data:
+	bin/verify-seed-data
+
+verify: test test_compiled verify_seed_data

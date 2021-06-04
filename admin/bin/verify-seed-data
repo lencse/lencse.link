@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+const assert = require('assert').strict
+
+assert(require('../.seed.json').links.length > 100)
+assert(require('../.seed.json').users.length > 1)
