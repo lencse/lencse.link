@@ -23,11 +23,15 @@ jobs:
 
       - run:
           name: Build admin service
-          command: cd main ; make
+          command: cd admin ; make
 
       - run:
           name: Test admin service
-          command: cd main ; make verify
+          command: cd admin ; make verify
+
+      - run:
+          name: Build migration service
+          command: cd admin ; make
 
     #   - run:
     #       name: Build main service
