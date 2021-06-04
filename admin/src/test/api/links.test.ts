@@ -13,14 +13,22 @@ import { LinkDb, LinkRepository, QueryParams, QueryResult } from "../../link/rep
 import { UserById } from "../../user/repository"
 import { createToken } from "../../user"
 import { validate } from "uuid"
+import { now } from "lodash"
+import { link } from "fs"
+
+const timer = {
+    now: new Date()
+}
 
 class LinkTestRepository implements LinkRepository {
     links: LinkData[] = []
 
     async addLink(data: LinkToSave): Promise<Link> {
         this.links.push({
-            ...data,
-            creationDate: new Date(),
+            id: data.id,
+            shortLink: data.shortLink,
+            redirectTo: data.redirectTo,
+            creationDate: timer.now,
             hitCount: 0,
             user: {
                 email: 'test@test.hu',
@@ -87,13 +95,27 @@ describe('Links API', () => {
                 cookie: `token=${createToken('SECRET')(testUser)}`
             }
         })
+        timer.now = new Date('2000-01-01T00:00:00Z')
         await resolveHandler(req, res, linksHandler(userRepo, 'SECRET', linkRepo))
 
         expect(res.statusCode).toBe(201)
-        const result = res._getJSONData()
-        expect(validate(result.link.id)).toBeTruthy()
-        expect(result.link.shortLink).toBe('test')
-        expect(result.link.redirectTo).toBe('https://example.com')
+        const result = res._getJSONData().link
+        expect(validate(result.id)).toBeTruthy()
+        expect(result.shortLink).toBe('test')
+        expect(result.redirectTo).toBe('https://example.com')
+        const { userId, ...rest} = result
+        expect([{
+            ...linkRepo.links[0],
+            creationDate: new Date(linkRepo.links[0].creationDate),
+        }]).toEqual([{
+            ...rest,
+            hitCount: 0,
+            creationDate: timer.now,
+            user: {
+                ...testUser,
+                isActive: true,
+            }
+        }])
     })
 
 })
