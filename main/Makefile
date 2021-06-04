@@ -10,3 +10,11 @@ node_modules:
 
 docker:
 	docker build -t lencse/test-lencse-link-main --no-cache --progress plain .
+
+test: node_modules
+	`yarn bin`/jest
+
+test_compiled: build
+	`yarn bin`/jest -c jest.compiled.config.js --verbose
+
+verify: test test_compiled

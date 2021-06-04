@@ -23,7 +23,7 @@ module.exports = {
     collectCoverageFrom: ["src/**/*.ts"],
 
     // The directory where Jest should output its coverage files
-    coverageDirectory: "logs/jest",
+    coverageDirectory: "../logs/jest/main",
 
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: [
@@ -84,7 +84,7 @@ module.exports = {
     // moduleNameMapper: {},
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-    // modulePathIgnorePatterns: [],
+    modulePathIgnorePatterns: ['.next'],
 
     // Activates notifications for test results
     // notify: false,
@@ -147,13 +147,14 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files
     testMatch: [
-        "**/test/**/?(*.)+(spec|test).[jt]s?(x)"
+        "**/src/test/**/?(*.)+(spec|test).[jt]s?(x)"
     ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-    // testPathIgnorePatterns: [
-    //   "/node_modules/"
-    // ],
+    testPathIgnorePatterns: [
+        "/node_modules/",
+        "/.next/"
+    ],
 
     // The regexp pattern or array of patterns that Jest uses to detect test files
     // testRegex: [],
@@ -186,7 +187,7 @@ module.exports = {
     // verbose: undefined,
 
     // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
-    // watchPathIgnorePatterns: [],
+    watchPathIgnorePatterns: ["/.next"],
 
     // Whether to use watchman for file crawling
     // watchman: true,

@@ -1,6 +1,6 @@
-.PHONY: seed docker
+.PHONY: seed docker test test_compiled verify
 
-default: .next build .seed.json
+default: build .next .seed.json
 
 build: node_modules
 	node_modules/.bin/tsc -p . --outDir ./build --pretty
@@ -11,11 +11,19 @@ node_modules:
 .next: node_modules
 	NEXT_BUILDING=true node_modules/.bin/next build
 
-.seed.json: build
+.seed.json:
 	bin/generate-seed-data
 
-seed: .seed.json
+seed: build .seed.json
 	bin/save-seed
 
 docker:
 	docker build -t lencse/test-lencse-link-admin --no-cache --progress plain .
+
+test: node_modules
+	`yarn bin`/jest
+
+test_compiled: build
+	`yarn bin`/jest -c jest.compiled.config.js --verbose
+
+verify: test test_compiled

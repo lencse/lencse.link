@@ -15,19 +15,35 @@ jobs:
 
       - run:
           name: Build main service
-          command: cd main ; make docker
+          command: cd main ; make
+
+      - run:
+          name: Test main service
+          command: cd main ; make verify
 
       - run:
           name: Build admin service
-          command: cd admin ; make docker
+          command: cd main ; make
 
       - run:
-          name: Build migration service
-          command: cd db ; make docker
+          name: Test admin service
+          command: cd main ; make verify
 
-      - run:
-          name: Run containers
-          command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://admin:3000
+    #   - run:
+    #       name: Build main service
+    #       command: cd main ; make docker
+
+    #   - run:
+    #       name: Build admin service
+    #       command: cd admin ; make docker
+
+    #   - run:
+    #       name: Build migration service
+    #       command: cd db ; make docker
+
+    #   - run:
+    #       name: Run containers
+    #       command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://admin:3000
 
 
     #   # build and push Docker image

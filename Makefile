@@ -9,9 +9,8 @@
 	node
 	docker_build
 	docker_run
-	test
+	verify
 	watch_test
-	test_compiled
 	check_dotenv dev_db wait_for_db check_dev_log_size generate_seed_data
 
 ifneq (,$(wildcard ./.env))
@@ -35,8 +34,9 @@ main/node_modules: main/package.json main/yarn.lock
 db/node_modules: db/package.json db/yarn.lock
 	cd db; yarn && touch node_modules
 
-test: admin/node_modules main/node_modules db/node_modules
-	cd admin ; ${BIN}/jest --verbose
+verify:
+	cd admin ; make verify
+	cd main ; make verify
 
 watch_test: admin/node_modules main/node_modules db/node_modules
 	cd admin ; $(BIN)/jest -c jest.compiled.config.js --verbose --watch

@@ -1,4 +1,7 @@
 {
+    "name": "@lencse.link/admin",
+    "author": "Lencse <leventeloki@gmail.com>",
+    "license": "MIT",
     "engines": {
         "node": "^16"
     },
