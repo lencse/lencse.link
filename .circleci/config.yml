@@ -12,20 +12,14 @@ jobs:
           DASHBOARD_PAGE_SIZE: 100
           JWT_SECRET: "My baby's got a secret"
 
-        # auth:
-        #   username: mydockerhub-user
-        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
       - image: circleci/postgres:alpine
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
+
     steps:
       - checkout
-
-    #   - setup_remote_docker:
-    #       version: 20.10.2
-    #       docker_layer_caching: false
 
       - run:
           name: Install dependecies for build and test
@@ -70,23 +64,44 @@ jobs:
             sleep 5
             make smoke_test
 
-    #   - run:
-    #       name: Build main service
-    #       command: cd main ; make docker
+  images:
+    docker:
+      - image: cimg/base:2021.04
 
-    #   - run:
-    #       name: Build admin service
-    #       command: cd admin ; make docker
+    steps:
+      - checkout
 
-    #   - run:
-    #       name: Build migration service
-    #       command: cd db ; make docker
+      - setup_remote_docker:
+          version: 20.10.2
+          docker_layer_caching: false
 
-    #   - run:
-    #       name: Run containers
-    #       command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://admin:3000
+      - run:
+          name: Build main service
+          command: cd main ; make docker
+
+      - run:
+          name: Build admin service
+          command: cd admin ; make docker
+
+      - run:
+          name: Build migration service
+          command: cd db ; make docker
+
+      - run:
+          name: Run containers
+          command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://admin:3000
+          background: true
 
 
     #   # build and push Docker image
     #   - run: |
     #       docker run -d --network container:my-app -v $(pwd)/.circleci/test:/usr/share/nginx/html:ro nginx:alpine
+
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+      - build
+      - images:
+          requires:
+            - build
