@@ -16,7 +16,10 @@ const config = {
     }
 }
 
-if ('true' !== process.env.NEXT_BUILDING && 'undefined' === typeof window) {
+if ('true' !== process.env.NEXT_BUILDING
+    && 'undefined' === typeof window
+    && 'test' !== process.env.NODE_ENV
+) {
     assert('' !== config.db.connectionUrl, 'DATABASE_URL env value is not set.')
     assert('' !== config.jwt.secret, 'JWT_SECRET env value is not set.')
     assert('' !== config.urls.mainService, 'MAIN_URL env value is not set.')

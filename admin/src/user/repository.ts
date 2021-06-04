@@ -19,6 +19,12 @@ export interface UserByEmail {
 
 }
 
+export interface UserById {
+
+    getById(id: string): Promise<User[]>
+
+}
+
 export class UserDb implements UserRepository {
 
     constructor(private db: DbQuery) { }

@@ -31,7 +31,7 @@ export interface LinkRepository {
 
     addLink(data: LinkToSave): Promise<Link>
 
-    removeLink(id: string): Promise<any>
+    removeLink(id: string): Promise<void>
 
     getLinks(params: QueryParams): Promise<QueryResult>
 
@@ -89,7 +89,7 @@ export class LinkDb implements LinkRepository {
         }
     }
 
-    public async removeLink(id: string): Promise<any> {
+    public async removeLink(id: string): Promise<void> {
         await this.db.query(`
                 UPDATE links SET deactivation_date = NOW() WHERE id = $1
                 `,

@@ -1,9 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { serialize } from 'cookie'
+import { Context } from '../../api'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export const logoutHandler = async (ctx: Context) => {
+    const { req, res } = ctx
     if ('POST' !== req.method) {
-        res.status(405).setHeader('Allow', 'POST').send('Method not allowed.')
+        res.status(405)
+        res.setHeader('Allow', 'POST')
+        res.send('Method not allowed.')
         return
     }
     res.setHeader('Set-Cookie', serialize('token', null, {
@@ -14,4 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         sameSite: 'strict'
     }))
     res.redirect('/')
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    logoutHandler({ req, res })
 }
