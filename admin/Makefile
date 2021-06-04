@@ -21,7 +21,7 @@ docker:
 	docker build -t lencse/test-lencse-link-admin --no-cache --progress plain .
 
 test: node_modules
-	`yarn bin`/jest
+	`yarn bin`/jest --verbose
 
 test_compiled: build
 	`yarn bin`/jest -c jest.compiled.config.js --verbose
