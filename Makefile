@@ -87,8 +87,24 @@ sql:
 		docker exec -it ${DEV_DB_NAME} psql --username=${DB_USER} || \
 		docker exec -it ${DEV_DB_NAME} psql --username=${DB_USER} --command "$(SQL)"
 
+start: node_modules
+	cd admin ; make
+	cd main ; make
+	cd db ; make
+	`yarn bin`/concurrently \
+		-n admin,main \
+		-c bgBlue,bgMagenta \
+		"cd admin ; ${BIN}/next start -p ${ADMIN_PORT}" \
+		"cd main ; PORT=${MAIN_PORT} node server.js"
+
 seed:
 	cd admin ; make seed
+
+
+smoke_test:
+	bin/smoke-test
+
+# bin/smoke-test 2>/dev/null
 
 generate_seed_data:
 	admin/bin/generate-seed-data

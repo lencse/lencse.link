@@ -6,7 +6,7 @@ build: node_modules
 	node_modules/.bin/tsc -p . --outDir ./build --pretty
 
 node_modules:
-	yarn
+	yarn && touch node_modules
 
 .next: node_modules
 	NEXT_BUILDING=true node_modules/.bin/next build

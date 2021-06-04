@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# RES=$(curl -I http://localhost:${ADMIN_PORT} | head -n 1 | cut -d$' ' -f2)
+
+# if [ "$RES" -eq "200" ]; then
+#     echo ok
+# else
+#     echo not ok
+#     exit 1
+# fi
+
+function checkAddress
+{
+    ADDRESS=$1
+    [ $(curl -sI "$ADDRESS" | head -n 1 | cut -d$' ' -f2) -eq "200" ] && \
+        echo ✔ $ADDRESS || \
+        ( echo ✗ $ADDRESS ; exit -1)
+}
+
+ADDRESSES=(
+     "http://localhost:${MAIN_PORT}"
+     "http://localhost:${ADMIN_PORT}"
+)
+
+
+for ADDRESS in "${ADDRESSES[@]}"; do
+    checkAddress "${ADDRESS}"
+done
+
+[ $(curl -svX POST http://localhost:${ADMIN_PORT}/api/login -d email=admin@test.link -d password=ALittleDummyPassword 2>&1 | grep "Set-Cookie: token" | sed 's/.*Set-Cookie: token=\([^.]*\).*/\1/' | base64 --decode ) == '{"alg":"HS256","typ":"JWT"}' ] && \
+        echo ✔ http://localhost:${ADMIN_PORT}/api/login || \
+        ( echo ✗ http://localhost:${ADMIN_PORT}/api/login ; exit -1)
+
