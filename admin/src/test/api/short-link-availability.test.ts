@@ -97,6 +97,23 @@ describe('Short link availability API', () => {
         expect(res.statusCode).toBe(404)
     })
 
+    it('Wrong HTTP method', async () => {
+        const userRepo = new UserTesRepository()
+        const linkRepo = new LinkTestRepository()
+        const { req, res } = createMocks({
+            method: 'POST',
+            headers: {
+                cookie: `token=${createToken('SECRET')(testUser)}`
+            }
+        })
+        await resolveHandler(req, res, createHandler(userRepo, linkRepo))
+
+        expect(res.statusCode).toBe(405)
+        const headers = res.getHeaders()
+        expect(headers.allow).toBe('GET')
+    })
+
+
 })
 
 

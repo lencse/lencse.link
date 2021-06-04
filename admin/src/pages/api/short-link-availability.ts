@@ -36,7 +36,8 @@ export const shortLinkAvailabilityHandler = (
                     return ''
                 })()
                 if ('' === shortLink) {
-                    res.status(400).send('Bad request.')
+                    res.status(400)
+                    res.send('Bad request.')
                     return
                 }
                 const isAvailable = await checkAvailability(
@@ -44,11 +45,13 @@ export const shortLinkAvailabilityHandler = (
                     mainServiceUrl,
                     headStatusCode,
                 )(shortLink)
-                res.status(isAvailable ? 404 : 200).end()
-
+                res.status(isAvailable ? 404 : 200)
+                res.end()
                 return
             }
-            res.status(405).setHeader('Allow', 'GET').send('Method not allowed.')
+            res.status(405)
+            res.setHeader('Allow', 'GET')
+            res.send('Method not allowed.')
 
         })
     }
