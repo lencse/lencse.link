@@ -1,8 +1,4 @@
 version: 2.1
-
-orbs:
-  cypress: cypress-io/cypress@1.28.0
-
 jobs:
   build:
     docker:
@@ -105,13 +101,6 @@ workflows:
   workflow:
     jobs:
       - build
-      - cypress/run:
-          install-command: |
-            cd admin ; make
-            cd main ; make
-            cd db ; make
-
       - images:
           requires:
             - build
-            -  cypress/run
