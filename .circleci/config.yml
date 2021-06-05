@@ -19,6 +19,7 @@ jobs:
           POSTGRES_DB: postgres
 
     steps:
+
       - checkout
 
       - run:
@@ -63,6 +64,10 @@ jobs:
           command: |
             sleep 5
             make smoke_test
+
+      - run:
+          name: E2E test
+          command: node_modules/.bin/cypress run --browser chrome --headless
 
   images:
     docker:
