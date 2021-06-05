@@ -114,7 +114,22 @@ jobs:
     steps:
       - checkout
 
-      - run: echo Deploy
+      - setup_remote_docker:
+          version: 20.10.2
+          docker_layer_caching: false
+
+      - run:
+          name: Build image
+          command: docker build -t lencse/circleci-node-cypress:16.2 .circleci/docker
+
+      - run:
+          name: Build image
+          command: docker build -t lencse/circleci-node-cypress:16.2 .circleci/docker
+
+      - run:
+          name: Test image
+          command: docker run -it -v $(pwd):/build lencse/circleci-node-cypress:16.2 /build/verify-cypress.sh
+
 
     #   # build and push Docker image
     #   - run: |
@@ -132,3 +147,14 @@ workflows:
       - deploy:
           requires:
             - images
+
+  circleci_docker:
+    # triggers:
+    #    - schedule:
+    #        cron: "0 0 * * *"
+    #        filters:
+    #          branches:
+    #            only:
+    #              - main
+    jobs:
+      - build_circleci_docker
