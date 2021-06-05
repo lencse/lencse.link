@@ -109,7 +109,7 @@ jobs:
 
   build_circleci_docker:
     machine:
-      - image: "ubuntu-2004:202104-01"
+      image: "ubuntu-2004:202104-01"
 
     steps:
       - checkout
@@ -124,7 +124,7 @@ jobs:
 
       - run:
           name: Test image
-          command: docker run -it -v $(pwd):/build lencse/circleci-node-cypress:16.2 /build/verify-cypress.sh
+          command: docker run -it -v $(pwd)/.circleci/docker:/build lencse/circleci-node-cypress:16.2 /build/verify-cypress.sh
 
 
     #   # build and push Docker image
