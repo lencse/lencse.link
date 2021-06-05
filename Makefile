@@ -127,6 +127,7 @@ docker_build:
 	cd db ; make docker
 
 docker_run:
+	( docker kill $(docker ps -q) | :) && sleep 2 && (docker network rm lencse-link-test || :) \
 	docker network create lencse-link-test && \
 	docker run -d --rm -h db --network=lencse-link-test -e POSTGRES_PASSWORD=postgres postgres:latest && \
 	docker run -d --rm -h admin --name lencse-link-admin-running --network=lencse-link-test -p 5201:3000 \
