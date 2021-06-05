@@ -50,6 +50,7 @@ export default class Login extends React.Component<{ errorMessage: string }, {}>
                             name='email'
                             label='Email:'
                             className='mb-8'
+                            cy={{ input: 'login_email' }}
                         />
 
                         <Input
@@ -57,6 +58,7 @@ export default class Login extends React.Component<{ errorMessage: string }, {}>
                             label='Password:'
                             type='password'
                             className='mb-8'
+                            cy={{ input: 'login_password' }}
                         />
 
                         <div className={c(
@@ -67,11 +69,11 @@ export default class Login extends React.Component<{ errorMessage: string }, {}>
                             {
                                 this.props.errorMessage === '' ?
                                     <span>&nbsp;</span> :
-                                    this.props.errorMessage
+                                    <span data-cy='login_error'>{this.props.errorMessage}</span>
                             }
                         </div>
                         <div className='text-center'>
-                            <Button>Login</Button>
+                            <Button cy='login_submit'>Login</Button>
                         </div>
                     </form>
                 </div>

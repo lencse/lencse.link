@@ -89,9 +89,8 @@ jobs:
 
       - run:
           name: Run containers
-          command: make docker_run && docker run --network lencse-link-test appropriate/curl --retry 100 --retry-connrefused http://admin:3000
+          command: make docker_run
           background: true
-
 
     #   # build and push Docker image
     #   - run: |
@@ -99,7 +98,7 @@ jobs:
 
 workflows:
   version: 2
-  build_and_push:
+  workflow:
     jobs:
       - build
       - images:

@@ -19,29 +19,21 @@ export async function connection(): Promise<DbConnection> {
     }
 
     const getClient = async (): Promise<any> => {
-        console.log('DB CONN')
         if (null === client) {
-            console.log('- NULL')
             if (semaphore) {
-                console.log('- SEMAPHORE')
                 while (await setImmediate(true)) {
-                    console.log('- LOOP')
                     if (null !== client) {
-                        console.log('- RETURN LOOP')
                         return client
                     }
                 }
             }
-            console.log('- CREATE')
             semaphore = true
             client = await pool.connect()
             if (c++ > 0) {
                 throw new Error('Singleton failed :(')
             }
-            console.log('- CREATED')
             process.on('exit', () => client?.release())
         }
-        console.log('- RETURN')
         return client
     }
 
@@ -51,8 +43,6 @@ export async function connection(): Promise<DbConnection> {
 
     return {
         query: async (sql, params) => {
-            // process.stdout.write(sql)
-            // console.log({params})
             const result: any = await cl.query(sql, params)
             return result.rows
         },

@@ -21,6 +21,7 @@ export default class Logout extends React.Component<{}, {}> {
                 <input
                     type='submit'
                     value='logout'
+                    data-cy='user_logout'
                     className={c(
                         'bg-transparent',
                         'cursor-pointer',

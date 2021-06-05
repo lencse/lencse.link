@@ -22,8 +22,6 @@ export async function connection(): Promise<DbConnection> {
 
     return {
         query: async (sql, params) => {
-            // process.stdout.write(sql)
-            // console.log({params})
             const result: any = await client?.query(sql, params)
             return result.rows
         },

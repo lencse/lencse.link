@@ -11,8 +11,8 @@ import { link } from 'fs'
 import { writeFile} from 'fs/promises'
 import { resolve } from 'path'
 
-const USER_COUNT = 20
-const LINK_COUNT = 1000
+const USER_COUNT = Number(process.argv[2] ?? 20)
+const LINK_COUNT = Number(process.argv[3] ?? 1000)
 
 type UserToSave = User & {
     password: string

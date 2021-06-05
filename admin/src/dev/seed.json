@@ -22,6 +22,10 @@
         {
             "shortLink": "shortener-repo",
             "redirectTo": "https://github.com/lencse/lencse.link"
+        },
+        {
+            "shortLink": "shortener-ci",
+            "redirectTo": "https://app.circleci.com/pipelines/github/lencse/lencse.link"
         }
     ]
 }

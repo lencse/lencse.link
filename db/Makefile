@@ -10,7 +10,7 @@ node_modules: package.json yarn.lock
 	yarn && touch node_modules
 
 migrate: node_modules
-	`yarn bin`/db-migrate up
+	node_modules/.bin/db-migrate up
 
 migrate_reset: node_modules
 	`yarn bin`/db-migrate reset

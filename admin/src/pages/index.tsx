@@ -34,7 +34,7 @@ class UserInfo extends React.Component<{ user: User }, {}> {
                         <FontAwesomeIcon icon={faUser} width='12px' />
                     </div>
                     <div className='mr-4 flex justify-center flex-col'>
-                        <span className='inline-block'>
+                        <span className='inline-block' data-cy='user_username'>
                             {this.props.user.username}
                         </span>
                     </div>
