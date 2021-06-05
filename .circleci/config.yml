@@ -23,10 +23,17 @@ jobs:
       - checkout
 
       - run:
-          name: Install packages for Cyypres
+          name: Install packages for Cypress
           command: |
             sudo apt-get update
             sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+            sudo apt-get install -y wget
+            sudo apt-get install -y libasound2 libnspr4 libnss3 libxss1 xdg-utils unzip
+            sudo apt-get install -y libappindicator1 fonts-liberation
+            sudo apt-get install -y libappindicator3-1 libatk-bridge2.0-0 libatspi2.0-0 libgbm1 libgtk-3-0
+            sudo apt-get install -f
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo dpkg -i google-chrome*.deb
 
       - run:
           name: Install dependecies for build and test
