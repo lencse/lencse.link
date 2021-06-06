@@ -24,9 +24,12 @@ jobs:
       - checkout
 
       - restore_cache:
-          name: Restore cache
-          keys:
-            - yarn-and-cypress
+          name: Restore yarn and cypress cache
+          key: yarn-and-cypress-{{ checksum "yarn.lock" }}-{{ checksum "package.json" }}-{{ checksum "admin/yarn.lock" }}-{{ checksum "admin/package.json" }}-{{ checksum "db/yarn.lock" }}-{{ checksum "db/package.json" }}-{{ checksum "main/yarn.lock" }}-{{ checksum "main/package.json" }}
+
+      - restore_cache:
+          name: Restore next.js cache
+          key: nextjs-{{ checksum "admin/yarn.lock" }}-{{ checksum "admin/package.json" }}
 
       - run:
           name: Install dependecies for build and test
@@ -76,11 +79,17 @@ jobs:
           command: node_modules/.bin/cypress run --browser chrome --headless --record --key $CYPRESS_PROJECT_KEY
 
       - save_cache:
-          name: Save cache
-          key: yarn-and-cypress
+          name: Save yarn and cypress cache
+          key: yarn-and-cypress-{{ checksum "yarn.lock" }}-{{ checksum "package.json" }}-{{ checksum "admin/yarn.lock" }}-{{ checksum "admin/package.json" }}-{{ checksum "db/yarn.lock" }}-{{ checksum "db/package.json" }}-{{ checksum "main/yarn.lock" }}-{{ checksum "main/package.json" }}
+          paths:
+            - admin/.next/cache
+
+      - save_cache:
+          name: Save yarn and cypress cache
+          key: nextjs-{{ checksum "admin/yarn.lock" }}-{{ checksum "admin/package.json" }}
           paths:
             - ~/.cache
-            
+
   images:
     docker:
       - image: cimg/base:2021.04
