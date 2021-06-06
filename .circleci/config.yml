@@ -73,14 +73,14 @@ jobs:
 
       - run:
           name: E2E test
-          command: node_modules/.bin/cypress run --browser chrome --headless --record --key $CYPRESS_PROJECT_KEY
+          command: node_modules/.bin/cypress run --browser chrome --headless --record --key $CYPRESS_PROJECT_KEY --ci-build-id $CIRCLE_BUILD_URL
 
       - save_cache:
           name: Save cache
           key: yarn-and-cypress
           paths:
             - ~/.cache
-            
+
   images:
     docker:
       - image: cimg/base:2021.04
