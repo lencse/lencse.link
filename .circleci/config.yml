@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: lencse/circleci-node-cypress:16.2
+      - image: lencse/circleci-node-cypress:16.2-chrome-91
         environment:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
           ADMIN_PORT: 5001
@@ -107,26 +107,6 @@ jobs:
 
       - run: echo Deploy
 
-  build_circleci_docker:
-    machine:
-      image: "ubuntu-2004:202104-01"
-
-    steps:
-      - checkout
-
-    #   - setup_remote_docker:
-    #       version: 20.10.2
-    #       docker_layer_caching: false
-
-      - run:
-          name: Build image
-          command: docker build -t lencse/circleci-node-cypress:16.2 .circleci/docker
-
-      - run:
-          name: Test image
-          command: docker run -it -v $(pwd)/.circleci/docker:/build lencse/circleci-node-cypress:16.2 /build/verify-cypress.sh
-
-
     #   # build and push Docker image
     #   - run: |
     #       docker run -d --network container:my-app -v $(pwd)/.circleci/test:/usr/share/nginx/html:ro nginx:alpine
@@ -143,14 +123,3 @@ workflows:
       - deploy:
           requires:
             - images
-
-  circleci_docker:
-    # triggers:
-    #    - schedule:
-    #        cron: "0 0 * * *"
-    #        filters:
-    #          branches:
-    #            only:
-    #              - main
-    jobs:
-      - build_circleci_docker
