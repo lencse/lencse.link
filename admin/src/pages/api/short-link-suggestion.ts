@@ -35,9 +35,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     if ('GET' === req.method) {
         const db = new LinkDb(await connection())
-        let shortLink = 'i'
+        let shortLink = uuid()
         while (await db.isShortLinkExisting(shortLink)) {
-            shortLink = shortLink + 'i'
+            shortLink = uuid()
         }
         res.status(200).json({
             'shortLinkSuggestion': shortLink

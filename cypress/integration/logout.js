@@ -1,16 +1,12 @@
 /// <reference types="cypress" />
 
-import seed from '../fixtures/seed'
+import { login } from '../lib'
 
 context('Logout process', () => {
 
-    const admin = seed.users.pop()
 
     beforeEach(() => {
-        cy.visit('/')
-        cy.get('[data-cy=login_email]').type(admin.email)
-        cy.get('[data-cy=login_password]').type(admin.password)
-        cy.get('[data-cy=login_submit]').click()
+        login()
     })
 
     it('Logout', () => {

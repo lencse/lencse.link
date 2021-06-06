@@ -33,10 +33,6 @@ class UrlCheckerViewport extends React.Component<UrlCheckerViewportProps, UrlChe
         props.inViewPortNotifier.on('inViewport', () => this.checkUrl())
     }
 
-    componentDidMount() {
-        console.log(this.props.url, this.props.inViewport)
-    }
-
     private async checkUrl() {
         if ('checked' === this.state.status) {
             return

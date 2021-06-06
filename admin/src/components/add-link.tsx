@@ -181,8 +181,10 @@ export default class AddLink extends React.Component<AddLinkProps, AddLinkState>
                     value={this.state.shortLink}
                     onChange={e => this.updateShortLink(e.target.value)}
                     inputClassName='pl-16 sm:pl-28'
+                    cy={{ input: 'add_suggest_input' }}
                 >
                     <Button
+                        cy='add_suggest_button'
                         type='button'
                         disabled={this.state.suggesting}
                         onClick={() => this.suggest()}
