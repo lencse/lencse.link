@@ -68,7 +68,7 @@ jobs:
 
       - run:
           name: E2E test
-          command: node_modules/.bin/cypress run --browser chrome --headless
+          command: node_modules/.bin/cypress run --browser chrome --headless --record --key $CYPRESS_PROJECT_KEY
 
   images:
     docker:
