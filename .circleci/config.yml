@@ -23,6 +23,11 @@ jobs:
 
       - checkout
 
+      - restore_cache:
+          name: Restore cache
+          keys:
+            - yarn-and-cypress
+
       - run:
           name: Install dependecies for build and test
           command: make
@@ -70,6 +75,12 @@ jobs:
           name: E2E test
           command: node_modules/.bin/cypress run --browser chrome --headless --record --key $CYPRESS_PROJECT_KEY
 
+      - save_cache:
+          name: Save cache
+          key: yarn-and-cypress
+          paths:
+            - ~/.cache
+            
   images:
     docker:
       - image: cimg/base:2021.04

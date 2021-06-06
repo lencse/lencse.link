@@ -7,7 +7,7 @@
 default: node_modules
 
 node_modules: package.json yarn.lock
-	yarn && touch node_modules
+	yarn --immutable && touch node_modules
 
 migrate: node_modules
 	node_modules/.bin/db-migrate up

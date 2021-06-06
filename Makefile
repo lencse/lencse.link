@@ -23,16 +23,16 @@ DEV_DB_NAME=lnk_postgres
 TSC=$(BIN)/tsc -p . --outDir ./build --pretty --watch --preserveWatchOutput
 
 node_modules: package.json yarn.lock
-	yarn && touch node_modules
+	yarn --immutable && touch node_modules
 
 admin/node_modules: admin/package.json admin/yarn.lock
-	cd admin; yarn && touch node_modules
+	cd admin; make node_modules
 
 main/node_modules: main/package.json main/yarn.lock
-	cd main; yarn && touch node_modules
+	cd main; make node_modules
 
 db/node_modules: db/package.json db/yarn.lock
-	cd db; yarn && touch node_modules
+	cd db; make node_modules
 
 verify:
 	cd admin ; make verify

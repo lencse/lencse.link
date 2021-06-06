@@ -6,7 +6,7 @@ build: node_modules
 	node_modules/.bin/tsc -p . --outDir ./build --pretty
 
 node_modules:
-	yarn && touch node_modules
+	yarn --immutable && touch node_modules
 
 docker:
 	docker build -t lencse/test-lencse-link-main --no-cache --progress plain .
