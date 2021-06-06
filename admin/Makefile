@@ -9,10 +9,10 @@ node_modules:
 	yarn --immutable && touch node_modules
 
 .next: node_modules
-	NEXT_BUILDING=true node_modules/.bin/next build
+	BUILDING=true node_modules/.bin/next build
 
 .seed.json:
-	bin/generate-seed-data
+	BUILDING=true bin/generate-seed-data
 
 seed: build .seed.json
 	bin/save-seed

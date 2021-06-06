@@ -16,7 +16,7 @@ const config = {
     }
 }
 
-if ('true' !== process.env.NEXT_BUILDING
+if ('true' !== process.env.BUILDING
     && 'undefined' === typeof window
     && 'test' !== process.env.NODE_ENV
 ) {
