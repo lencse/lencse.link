@@ -10,9 +10,11 @@ import { LinkToSave } from '../link/types.js'
 import { link } from 'fs'
 import { writeFile} from 'fs/promises'
 import { resolve } from 'path'
+import { createToken } from '../user/index.js'
+import config from '../config/config.js'
 
-const USER_COUNT = Number(process.argv[2] ?? 20)
-const LINK_COUNT = Number(process.argv[3] ?? 1000)
+const USER_COUNT = Number(process.argv[2] ?? 10)
+const LINK_COUNT = Number(process.argv[3] ?? 25)
 
 type UserToSave = User & {
     password: string
@@ -75,9 +77,16 @@ export async function main() {
         deleted: false,
     })))
 
-    writeFile(resolve(__dirname, '../../.seed.json'), JSON.stringify({
+    const admin = [...users].pop()
+    const token = createToken(config.jwt.secret)(admin)
+
+    await writeFile(resolve(__dirname, '../../.seed.json'), JSON.stringify({
         users,
         links,
+    }))
+
+    await writeFile(resolve(__dirname, '../../.token.json'), JSON.stringify({
+        token
     }))
 
 }

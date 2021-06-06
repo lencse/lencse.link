@@ -2,13 +2,13 @@
 
 import { login } from '../lib'
 
-context('Logout process', () => {
+context('Short link suggestion', () => {
 
     beforeEach(() => {
         login()
     })
 
-    it('Suggets new when clicking the button', () => {
+    it('Suggest new when clicking the button', () => {
         cy.get('[data-cy=add_suggest_button]').click()
         cy.get('[data-cy=add_suggest_input]').should(input => {
             const val = input.val()
@@ -16,7 +16,7 @@ context('Logout process', () => {
         })
     })
 
-    it('Suggets new for every click', () => {
+    it('Suggest new for every click', () => {
         cy.get('[data-cy=add_suggest_button]').click()
         cy.get('[data-cy=add_suggest_input]').should(input1 => {
             const first = input1.val()

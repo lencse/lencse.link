@@ -2,5 +2,5 @@
 
 const assert = require('assert').strict
 
-assert(require('../.seed.json').links.length > 100)
+assert(require('../.seed.json').links.length > 20)
 assert(require('../.seed.json').users.length > 1)

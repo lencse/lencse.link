@@ -11,6 +11,7 @@
 	docker_run
 	verify
 	watch_test
+	refresh
 	check_dotenv dev_db wait_for_db check_dev_log_size generate_seed_data
 
 ifneq (,$(wildcard ./.env))
@@ -62,7 +63,7 @@ dev: node_modules admin/node_modules main/node_modules db/node_modules logs
 		"make dev_db 2>&1 | tee -a logs/db.log" \
 		"(make wait_for_db && make migrate && make seed && (cd admin ; ${BIN}/next dev -p ${ADMIN_PORT})) 2>&1 | tee -a logs/admin.log" \
 		"(cd admin ; ${TSC}) 2>&1 | tee -a logs/admin-ts.log" \
-		"(make wait_for_db && (cd main ; PORT=${MAIN_PORT} $(BIN)/nodemon server.js)) 2>&1 | tee -a logs/main.log" \
+		"(make wait_for_db && (cd main ; make ;PORT=${MAIN_PORT} $(BIN)/nodemon server.js)) 2>&1 | tee -a logs/main.log" \
 		"(cd main ; ${TSC}) 2>&1 | tee -a logs/main-ts.log"
 
 dev_db:
@@ -100,7 +101,6 @@ start: node_modules
 seed:
 	cd admin ; make seed
 
-
 smoke_test:
 	bin/smoke-test
 
@@ -120,6 +120,12 @@ sh:
 
 node:
 	node
+
+refresh:
+	make migrate_reset
+	make migrate
+	make generate_seed_data
+	make seed
 
 docker_build:
 	cd admin ; make docker
