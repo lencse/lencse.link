@@ -82,13 +82,13 @@ jobs:
           name: Save yarn and cypress cache
           key: yarn-and-cypress-{{ checksum "yarn.lock" }}-{{ checksum "package.json" }}-{{ checksum "admin/yarn.lock" }}-{{ checksum "admin/package.json" }}-{{ checksum "db/yarn.lock" }}-{{ checksum "db/package.json" }}-{{ checksum "main/yarn.lock" }}-{{ checksum "main/package.json" }}
           paths:
-            - admin/.next/cache
+            - ~/.cache
 
       - save_cache:
-          name: Save yarn and cypress cache
+          name: Savenext.js cache
           key: nextjs-{{ checksum "admin/yarn.lock" }}-{{ checksum "admin/package.json" }}
           paths:
-            - ~/.cache
+            - admin/.next/cache
 
   images:
     docker:
