@@ -16,7 +16,6 @@ context('Login process', () => {
     })
 
     it('Successful login', () => {
-
         cy.get('[data-cy=login_email]').type(admin.email)
         cy.get('[data-cy=login_password]').type(admin.password)
         cy.get('[data-cy=login_submit]').click()
@@ -29,6 +28,16 @@ context('Login process', () => {
         cy.get('[data-cy=login_password]').type('WRONG PASSWORD')
         cy.get('[data-cy=login_submit]').click()
         cy.get('[data-cy=login_error]').should('be.visible')
+        cy.getCookie('token').should('not.exist')
+    })
+
+    it('Logout', () => {
+        cy.get('[data-cy=login_email]').type(admin.email)
+        cy.get('[data-cy=login_password]').type(admin.password)
+        cy.get('[data-cy=login_submit]').click()
+        // cy.wait(1000)
+        cy.get('[data-cy=user_logout]').click()
+        cy.get('[data-cy=login_email]').should('be.visible')
         cy.getCookie('token').should('not.exist')
     })
 

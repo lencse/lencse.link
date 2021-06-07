@@ -78,15 +78,10 @@ export async function main() {
     })))
 
     const admin = [...users].pop()
-    const token = createToken(config.jwt.secret)(admin)
 
     await writeFile(resolve(__dirname, '../../.seed.json'), JSON.stringify({
         users,
         links,
-    }))
-
-    await writeFile(resolve(__dirname, '../../.token.json'), JSON.stringify({
-        token
     }))
 
 }

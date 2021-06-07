@@ -126,6 +126,7 @@ refresh:
 	make migrate
 	make generate_seed_data
 	make seed
+	rm -f cypress/fixtures/token.json
 
 docker_build:
 	cd admin ; make docker
@@ -150,3 +151,6 @@ cypress/fixtures/token.json:
 
 e2e_tests_on_ci: cypress/fixtures/token.json
 	`yarn bin`/cypress run --browser chrome --headless --record --key ${CYPRESS_PROJECT_KEY}
+
+e2e_dev: cypress/fixtures/token.json
+	`yarn bin`/cypress open
