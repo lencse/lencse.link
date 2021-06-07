@@ -2,8 +2,7 @@
 
 import { login } from '../lib'
 
-context('Logout process', () => {
-
+context.skip('Logout process', () => {
 
     beforeEach(() => {
         login()
