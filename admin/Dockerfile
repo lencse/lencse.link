@@ -1,5 +1,6 @@
 FROM node
 # ENV NODE_ENV production
+ENV BUILDING true
 WORKDIR /app
 COPY . /app
 RUN make node_modules
