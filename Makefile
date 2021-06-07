@@ -144,3 +144,9 @@ docker_run:
 		-e DATABASE_URL=postgres://postgres:postgres@db:5432/postgres lencse/test-lencse-link-main && \
 	docker run --rm --network=lencse-link-test -e DATABASE_URL=postgres://postgres:postgres@db:5432/postgres lencse/test-lencse-link-migration && \
 	docker exec -it lencse-link-admin-running bin/save-seed && echo "\nOpen http://localhost:5201\nLogin info: admin@test.link/ALittleDummyPassword"
+
+cypress/fixtures/token.json:
+	admin/bin/print-token-for-seed-admin > cypress/fixtures/token.json
+
+e2e_tests_on_ci: cypress/fixtures/token.json
+	`yarn bin`/cypress run --browser chrome --headless --record --key ${CYPRESS_PROJECT_KEY}

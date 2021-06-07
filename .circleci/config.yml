@@ -76,7 +76,7 @@ jobs:
 
       - run:
           name: E2E test
-          command: node_modules/.bin/cypress run --browser chrome --headless --record --key $CYPRESS_PROJECT_KEY
+          command: make e2e_tests_on_ci
 
       - save_cache:
           name: Save yarn and cypress cache
@@ -85,7 +85,7 @@ jobs:
             - ~/.cache
 
       - save_cache:
-          name: Savenext.js cache
+          name: Save next.js cache
           key: nextjs-{{ checksum "admin/yarn.lock" }}-{{ checksum "admin/package.json" }}
           paths:
             - admin/.next/cache

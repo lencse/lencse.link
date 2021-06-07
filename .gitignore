@@ -4,3 +4,4 @@
 /.yarn-cache
 /cypress/videos
 /cypress/screenshots
+/cypress/fixtures/token.json
