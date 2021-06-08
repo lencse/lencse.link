@@ -181,7 +181,7 @@ export default class AddLink extends React.Component<AddLinkProps, AddLinkState>
                     value={this.state.shortLink}
                     onChange={e => this.updateShortLink(e.target.value)}
                     inputClassName='pl-16 sm:pl-28'
-                    cy={{ input: 'add_suggest_input' }}
+                    cy={{ input: 'add_short_link' }}
                 >
                     <Button
                         cy='add_suggest_button'
@@ -219,9 +219,10 @@ export default class AddLink extends React.Component<AddLinkProps, AddLinkState>
                 <Input
                     type='textarea'
                     name='redirectTo'
-                    label='Full link:'
+                    label='Full URL:'
                     value={this.state.redirectTo}
                     onChange={e => this.updateRedirectTo(e.target.value)}
+                    cy={{ input: 'add_redirect_to' }}
                 />
                 <div className={c(
                     'mt-4 mb-1',

@@ -57,7 +57,7 @@ export default class Input extends React.Component<InputProps, {}> {
                                     'w-full',
                                     this.props.inputClassName,
                                 )}
-                                cy-data={this.props.cy?.input}
+                                data-cy={this.props.cy?.input}
                             />
                         ) : (
                             <input

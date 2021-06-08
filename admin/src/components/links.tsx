@@ -144,7 +144,7 @@ export default class Links extends React.Component<LinksProps, LinksState> {
                     <tbody className='text-left block sm:table-row-group'>
                         <tr className={c('block sm:table-row whitespace-nowrap')}>
                             <th className={'p-2 block sm:table-cell min-w-min'}>Short link</th>
-                            <th className={'p-2 block sm:table-cell min-w-min'}>Full link</th>
+                            <th className={'p-2 block sm:table-cell min-w-min'}>Full URL</th>
                             <th className={'p-2 block sm:table-cell min-w-min'}>Created by</th>
                             <th className={'p-2 block sm:table-cell min-w-min'}>Created at</th>
                             <th className={'p-2 block sm:table-cell min-w-min'}>Hits</th>
