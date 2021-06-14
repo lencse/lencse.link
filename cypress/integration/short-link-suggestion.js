@@ -8,15 +8,7 @@ context('Short link suggestion', () => {
         login()
     })
 
-    it('Suggest new when clicking the button', () => {
-        cy.get('[data-cy=add_suggest_button]').click()
-        cy.get('[data-cy=add_short_link]').should(input => {
-            const val = input.val()
-            expect(val).to.match(/.+/)
-        })
-    })
-
-    it('Suggest new for every click', () => {
+    it('Suggest new for every click on the button', () => {
         cy.get('[data-cy=add_suggest_button]').click()
         cy.get('[data-cy=add_short_link]').should(input1 => {
             const first = input1.val()
