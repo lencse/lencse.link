@@ -42,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         const url = String(req.query.url)
         try {
-            await axios.head(url)
+            await axios.head(url, {timeout: 5000})
             res.status(200).end()
         } catch (e) {
             res.status(404).end()
