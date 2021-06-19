@@ -8,7 +8,7 @@ context('Short link suggestion', () => {
         login()
     })
 
-    it.only('Suggest new for every click on the button', () => {
+    it('Suggest new for every click on the button', () => {
         cy.get('[data-cy=add_redirect_to]').type('https://github.com')
         cy.get('[data-cy=add_short_link]').should($afterTyping => {
             const valueAfterTyping = $afterTyping.val()
@@ -36,7 +36,6 @@ context('Short link suggestion', () => {
                     })
                 })
             })
-
         })
     })
 
