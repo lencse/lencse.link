@@ -9,6 +9,7 @@ export const axiosHeadStatuscode: HeadHttpRequestStatuscode = async (url: string
     const { status } = await axios.head(url, {
         validateStatus: () => true,
         maxRedirects: 0,
+        timeout: 5000
     })
     return status
 }

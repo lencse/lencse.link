@@ -37,7 +37,7 @@ export const shortLinkSuggestionHandler = (
     }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    shortLinkSuggestionHandler(
+    await shortLinkSuggestionHandler(
         new UserDb(await connection()),
         config.jwt.secret,
         new LinkDb(await connection()),
