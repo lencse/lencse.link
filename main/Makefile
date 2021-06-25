@@ -1,4 +1,4 @@
-.PHONY: docker
+.PHONY: docker audit test test_compiled
 
 default: build
 
@@ -17,4 +17,7 @@ test: node_modules
 test_compiled: build
 	`yarn bin`/jest -c jest.compiled.config.js --verbose
 
-verify: test test_compiled
+audit:
+	yarn audit
+
+verify: audit test test_compiled

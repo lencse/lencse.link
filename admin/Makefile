@@ -1,4 +1,4 @@
-.PHONY: seed docker test test_compiled verify verify_seed_data
+.PHONY: seed docker test test_compiled verify verify_seed_data audit
 
 default: build .next .seed.json
 
@@ -29,4 +29,7 @@ test_compiled: build
 verify_seed_data:
 	bin/verify-seed-data
 
-verify: test test_compiled verify_seed_data
+audit:
+	yarn audit
+
+verify: audit test test_compiled verify_seed_data
