@@ -13,15 +13,12 @@ import AddLink from './add-link'
 import EventEmitter from 'events'
 import c from 'classnames'
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    cy?: string
-}
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export default class Button extends React.Component<ButtonProps, {}> {
     render() {
-        const { cy, ...props } = this.props
         return (
-            <button {...props} data-cy={cy} className={c(
+            <button {...this.props} className={c(
                 this.props.className,
                 'bg-gray-300',
                 this.props.className?.split(/\s+/).some(cl => cl.match(/^p-\d+/)) ? '' : 'p-2',

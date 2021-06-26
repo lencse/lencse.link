@@ -21,9 +21,6 @@ type InputProps = {
     onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     className?: string
     inputClassName?: string
-    cy?: {
-        input?: string
-    }
 }
 
 export default class Input extends React.Component<InputProps, {}> {
@@ -57,7 +54,6 @@ export default class Input extends React.Component<InputProps, {}> {
                                     'w-full',
                                     this.props.inputClassName,
                                 )}
-                                data-cy={this.props.cy?.input}
                             />
                         ) : (
                             <input
@@ -73,7 +69,6 @@ export default class Input extends React.Component<InputProps, {}> {
                                     'w-full',
                                     this.props.inputClassName,
                                 )}
-                                data-cy={this.props.cy?.input}
                             />
                         )
                     }

@@ -167,7 +167,7 @@ export default class AddLink extends React.Component<AddLinkProps, AddLinkState>
         const c1 = 'hsl(29, 80%, 44%)'
         const c2 = 'hsl(48, 94%, 68%)'
         return (
-            <div>
+            <div id='add-link'>
                 <h2 className={c(
                     'text-xl sm:text-2xl',
                     'font-black',
@@ -181,10 +181,9 @@ export default class AddLink extends React.Component<AddLinkProps, AddLinkState>
                     value={this.state.shortLink}
                     onChange={e => this.updateShortLink(e.target.value)}
                     inputClassName='pl-16 sm:pl-28'
-                    cy={{ input: 'add_short_link' }}
                 >
                     <Button
-                        cy='add_suggest_button'
+                        name='suggest'
                         type='button'
                         disabled={this.state.suggesting}
                         onClick={() => this.suggest()}
@@ -222,7 +221,6 @@ export default class AddLink extends React.Component<AddLinkProps, AddLinkState>
                     label='Full URL:'
                     value={this.state.redirectTo}
                     onChange={e => this.updateRedirectTo(e.target.value)}
-                    cy={{ input: 'add_redirect_to' }}
                 />
                 <div className={c(
                     'mt-4 mb-1',

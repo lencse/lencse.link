@@ -41,7 +41,7 @@ export default class Login extends React.Component<{ errorMessage: string }, {}>
                         lencse.link admin
                     </h1>
                     {/* TODO: nagy kepernyon egymas melle */}
-                    <form action="/api/login" method='post' className={c(
+                    <form action="/api/login" method='post' id='login-form' className={c(
                         'text-left',
                         'sm:mx-32',
                     )}>
@@ -50,7 +50,6 @@ export default class Login extends React.Component<{ errorMessage: string }, {}>
                             name='email'
                             label='Email:'
                             className='mb-8'
-                            cy={{ input: 'login_email' }}
                         />
 
                         <Input
@@ -58,7 +57,6 @@ export default class Login extends React.Component<{ errorMessage: string }, {}>
                             label='Password:'
                             type='password'
                             className='mb-8'
-                            cy={{ input: 'login_password' }}
                         />
 
                         <div className={c(
@@ -73,7 +71,7 @@ export default class Login extends React.Component<{ errorMessage: string }, {}>
                             }
                         </div>
                         <div className='text-center'>
-                            <Button cy='login_submit'>Login</Button>
+                            <Button name='submit'>Login</Button>
                         </div>
                     </form>
                 </div>
