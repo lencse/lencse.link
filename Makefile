@@ -10,7 +10,7 @@ PRETTIER=$(BIN)/prettier
 TSC=$(BIN)/tsc
 NEXT=$(BIN)/next
 TSNODE=$(BIN)/ts-node -r alias-hq/init
-URLS=data/urls.json
+URL_DATA_FILE=data/urls.json
 
 default: out
 
@@ -28,10 +28,9 @@ lint: node_modules
 verify: lint check-types test
 
 test: node_modules
-	echo "Unit tests are not set up"
-	#$(BIN)/jest --coverage
+	$(BIN)/jest --coverage
 
-out: node_modules $(URLS)
+out: node_modules $(URL_DATA_FILE)
 	$(NEXT) build
 	$(NEXT) export
 
@@ -48,10 +47,10 @@ dev: node_modules
 	cp .env.development .env
 
 init: .env node_modules
-	echo '[]' > $(URLS)
+	echo '[]' > $(URL_DATA_FILE)
 
 tsnode: node_modules
 	$(TSNODE)
 
-$(URLS): node_modules
+$(URL_DATA_FILE): node_modules
 	bin/pull-urls.sh

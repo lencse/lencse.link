@@ -9,3 +9,5 @@
 
 *.yml
 *.md
+
+/data
