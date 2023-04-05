@@ -6,7 +6,8 @@ on:
 
 jobs:
 
-  build:
+  build-and-deploy:
+    name: Build and deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,18 +19,6 @@ jobs:
           cache: yarn
       - name: Verify
         run: make verify
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: yarn
       - name: Build
         run: make
       - name: 'Deploy to Netlify'
