@@ -10,6 +10,7 @@ PRETTIER=$(BIN)/prettier
 TSC=$(BIN)/tsc
 NEXT=$(BIN)/next
 TSNODE=$(BIN)/ts-node -r alias-hq/init
+URLS=data/urls.json
 
 default: out
 
@@ -38,15 +39,19 @@ check-types: node_modules
 	$(TSC) -p . --noEmit
 
 dev: node_modules
-	$(NEXT) dev
+	$(BIN)/concurrently \
+		-n data,next \
+		"$(BIN)/nodemon" \
+		"$(NEXT) dev"
 
 .env: .env.development
 	cp .env.development .env
 
 init: .env node_modules
+	echo '[]' > $(URLS)
 
 tsnode: node_modules
 	$(TSNODE)
 
-data/urls.json: node_modules
+$(URLS): node_modules
 	bin/pull-urls.sh

@@ -9,4 +9,5 @@ export const pullUrls = async () => {
         public: row[2] === 'Y',
     }))
     writeFileSync('data/urls.json', JSON.stringify(urls))
+    console.info(urls)
 }
