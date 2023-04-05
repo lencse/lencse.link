@@ -47,3 +47,6 @@ init: .env node_modules
 
 tsnode: node_modules
 	$(TSNODE)
+
+data/urls.json: node_modules
+	bin/pull-urls.sh
