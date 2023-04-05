@@ -32,6 +32,7 @@ test: node_modules
 	$(BIN)/jest --coverage
 
 out: node_modules $(URL_DATA_FILE)
+	`export`
 	$(NEXT) build
 	$(NEXT) export
 
@@ -54,7 +55,9 @@ tsnode: node_modules
 	$(TSNODE)
 
 $(URL_DATA_FILE): node_modules
+	`export`
 	bin/pull-urls.sh
 
 $(REDIRECTS_FILE): $(URL_DATA_FILE)
+	`export`
 	bin/write-redirects-file.sh
