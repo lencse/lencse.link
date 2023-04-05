@@ -5,5 +5,5 @@ import { config } from '~/config/config'
 export const pullUrls = async () => {
     const urls = await getUrls()
     writeFileSync(config.urlDataFile, JSON.stringify(urls))
-    console.info(urls)
+    console.table(urls)
 }

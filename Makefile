@@ -11,8 +11,9 @@ TSC=$(BIN)/tsc
 NEXT=$(BIN)/next
 TSNODE=$(BIN)/ts-node -r alias-hq/init
 URL_DATA_FILE=data/urls.json
+REDIRECTS_FILE=_redirects
 
-default: out
+default: out $(REDIRECTS_FILE)
 
 node_modules: package.json yarn.lock
 	yarn --frozen-lockfile
@@ -54,3 +55,6 @@ tsnode: node_modules
 
 $(URL_DATA_FILE): node_modules
 	bin/pull-urls.sh
+
+$(REDIRECTS_FILE): $(URL_DATA_FILE)
+	bin/write-redirects-file.sh

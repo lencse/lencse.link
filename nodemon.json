@@ -2,6 +2,6 @@
     "watch": ["src", ".env"],
     "ignore": [],
     "ext": "ts,json",
-    "exec": "bin/pull-urls.sh",
+    "exec": "bin/dev.sh",
     "delay": 500
 }
