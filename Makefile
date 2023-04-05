@@ -1,4 +1,4 @@
-.PHONY: dev test format-code lint verify dev init-remix-app app-dev remix-dev init tsnode
+.PHONY: dev test format-code lint verify dev init tsnode
 
 ifneq (,$(wildcard ./.env))
     include .env
@@ -27,7 +27,8 @@ lint: node_modules
 verify: lint check-types test
 
 test: node_modules
-	$(BIN)/jest --coverage
+	echo "Unit tests are not set up"
+	#$(BIN)/jest --coverage
 
 out: node_modules
 	$(NEXT) build
