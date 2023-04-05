@@ -31,7 +31,7 @@ test: node_modules
 	echo "Unit tests are not set up"
 	#$(BIN)/jest --coverage
 
-out: node_modules
+out: node_modules $(URLS)
 	$(NEXT) build
 	$(NEXT) export
 
