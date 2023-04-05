@@ -7,7 +7,6 @@ endif
 
 BIN=node_modules/.bin
 PRETTIER=$(BIN)/prettier
-LINT=$(BIN)/eslint
 TSC=$(BIN)/tsc
 NEXT=$(BIN)/next
 TSNODE=$(BIN)/ts-node -r alias-hq/init
@@ -23,7 +22,7 @@ format-code: node_modules
 
 lint: node_modules
 	$(PRETTIER) --check .
-	$(LINT) .
+	$(NEXT) lint
 
 verify: lint check-types test
 
