@@ -39,3 +39,5 @@ jobs:
           NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
           NETLIFY_DEPLOY_TO_PROD: true
           build_command: ':'
+          install_command: ':'
+          build_directory: 'out/'
