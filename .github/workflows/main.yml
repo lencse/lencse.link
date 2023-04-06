@@ -27,11 +27,13 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Verify
         run: make verify
-      - name: Build
-        run: make
+      - name: Pull data from Google sheets
+        run: make src/data/urls.json
         env:
           GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+      - name: Build
+        run: make
       - name: 'Deploy to Netlify'
         uses: jsmrcaga/action-netlify-deploy@v2.0.0
         with:
