@@ -2,11 +2,13 @@
 
 CODE=$(cat <<EOF
 
-   import { main } from './src/bin/write-redirects-file';
+   import { main } from './$1';
    void main();
 
 EOF
 )
+
+#echo "$CODE"
 
 node_modules/.bin/ts-node \
     -O '{"module": "commonjs"}' \

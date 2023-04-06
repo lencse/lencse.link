@@ -10,7 +10,7 @@ PRETTIER=$(BIN)/prettier
 TSC=$(BIN)/tsc
 NEXT=$(BIN)/next
 TSNODE=$(BIN)/ts-node -r alias-hq/init
-URL_DATA_FILE=src/urls.json
+URL_DATA_FILE=src/data/urls.json
 REDIRECTS_FILE=out/_redirects
 
 export
@@ -34,18 +34,22 @@ test: node_modules
 	$(BIN)/jest --coverage
 
 out: node_modules $(URL_DATA_FILE)
-	$(NEXT) build
+	export NODE_ENV=production
+	$(NEXT) build --no-lint
 	$(NEXT) export
 
 check-types: node_modules
 	$(TSC) -p . --noEmit
 
-dev: node_modules
+.tmp:
+	mkdir -p .tmp
+
+dev: node_modules .tmp
 	$(BIN)/concurrently \
-		-n data,redirects,next.js \
+		-n urls,redirects,next.js \
 		-c bgBlue.white,bgGreen.white,bgBlack.yellow \
-		"$(BIN)/nodemon --config nodemon.pull-urls.json" \
-		"$(BIN)/nodemon --config nodemon.write-redirects-file.json" \
+		"$(BIN)/nodemon --config nodemon.urls.json" \
+		"$(BIN)/nodemon --config nodemon.redirects.json" \
 		"$(NEXT) dev"
 
 .env: .env.development
@@ -58,7 +62,7 @@ tsnode: node_modules
 	$(TSNODE)
 
 $(URL_DATA_FILE): node_modules
-	bin/pull-urls.sh
+	bin/run.sh src/bin/urls.ts | tee $(URL_DATA_FILE)
 
 $(REDIRECTS_FILE): out $(URL_DATA_FILE)
-	bin/write-redirects-file.sh > $(REDIRECTS_FILE)
+	bin/run.sh src/bin/redirects.ts | tee $(REDIRECTS_FILE)

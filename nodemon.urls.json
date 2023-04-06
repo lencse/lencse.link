@@ -1,0 +1,7 @@
+{
+    "watch": ["src", ".env", "bin"],
+    "ignore": ["src/data/urls.json"],
+    "ext": "ts,json,sh",
+    "exec": "(bin/run.sh src/bin/urls.ts | tee .tmp/urls.json) && mv .tmp/urls.json $URL_DATA_FILE",
+    "delay": 500
+}

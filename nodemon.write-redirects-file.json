@@ -1,7 +1,0 @@
-{
-    "watch": ["src", ".env", "bin"],
-    "ignore": [],
-    "ext": "ts,json",
-    "exec": "bin/write-redirects-file.sh",
-    "delay": 500
-}

@@ -36,7 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 /.tmp
-/src/urls.json
+/src/data/urls.json
 
 /.env
 /logs
