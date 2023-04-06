@@ -1,4 +1,4 @@
-.PHONY: dev test format-code lint verify dev init tsnode
+.PHONY: dev test format-code lint verify dev init tsnode empty-url-data clear
 
 ifneq (,$(wildcard ./.env))
     include .env
@@ -55,8 +55,13 @@ dev: node_modules .tmp
 .env: .env.development
 	cp .env.development .env
 
-init: .env node_modules
+init: .env node_modules empty-url-data
+
+empty-url-data:
 	echo '[]' > $(URL_DATA_FILE)
+
+clear:
+	rm -rf out $(URL_DATA_FILE)
 
 tsnode: node_modules
 	$(TSNODE)

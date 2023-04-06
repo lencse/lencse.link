@@ -26,7 +26,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Verify
-        run: make verify
+        run: |
+          make empty-url-data
+          make verify
+          make clear
       - name: Pull data from Google sheets
         run: make src/data/urls.json
         env:
