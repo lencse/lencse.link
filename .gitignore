@@ -36,9 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 /.tmp
-/data/urls.json
+/src/urls.json
 
 /.env
 /logs
-
-/_redirects

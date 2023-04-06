@@ -10,7 +10,7 @@ PRETTIER=$(BIN)/prettier
 TSC=$(BIN)/tsc
 NEXT=$(BIN)/next
 TSNODE=$(BIN)/ts-node -r alias-hq/init
-URL_DATA_FILE=data/urls.json
+URL_DATA_FILE=src/urls.json
 REDIRECTS_FILE=out/_redirects
 
 export
@@ -42,8 +42,10 @@ check-types: node_modules
 
 dev: node_modules
 	$(BIN)/concurrently \
-		-n data,next \
-		"$(BIN)/nodemon" \
+		-n data,redirects,next.js \
+		-c bgBlue.white,bgGreen.white,bgBlack.yellow \
+		"$(BIN)/nodemon --config nodemon.pull-urls.json" \
+		"$(BIN)/nodemon --config nodemon.write-redirects-file.json" \
 		"$(NEXT) dev"
 
 .env: .env.development
@@ -59,4 +61,4 @@ $(URL_DATA_FILE): node_modules
 	bin/pull-urls.sh
 
 $(REDIRECTS_FILE): out $(URL_DATA_FILE)
-	bin/write-redirects-file.sh
+	bin/write-redirects-file.sh > $(REDIRECTS_FILE)

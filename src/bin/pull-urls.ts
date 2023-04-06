@@ -2,8 +2,9 @@ import { getUrls } from '../google/sheets'
 import { writeFileSync } from 'fs'
 import { config } from '~/config/config'
 
-export const pullUrls = async () => {
+export const main = async () => {
     const urls = await getUrls()
-    writeFileSync(config.urlDataFile, JSON.stringify(urls))
+    const fileContent = JSON.stringify(urls)
+    writeFileSync(config.urlDataFile, fileContent)
     console.table(urls)
 }
