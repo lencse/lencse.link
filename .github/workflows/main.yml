@@ -6,9 +6,6 @@ on:
       - main
       - deploy
   workflow_dispatch:
-  repository_dispatch:
-    types:
-      - deploy
 
 jobs:
 
