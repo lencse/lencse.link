@@ -39,7 +39,7 @@ jobs:
           git push origin deploy --force
 
   deploy:
-    name: Test
+    name: Deploy
     if: github.ref == 'refs/heads/deploy'
     runs-on: ubuntu-latest
     steps:
