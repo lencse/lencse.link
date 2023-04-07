@@ -32,10 +32,10 @@ jobs:
         run: |
           make empty-url-data
           make verify
+      - name: Setup git user
+        uses: fregante/setup-git-user@v2
       - name: Publish to deploy branch
         run: |
-          git config --global user.email leventeloki@gmail.com
-          git config --global user.name Lencse
           git checkout --orphan deploy
           git commit -m "Deploy commit"
           git push origin deploy --force
