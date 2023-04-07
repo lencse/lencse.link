@@ -6,8 +6,9 @@ on:
 
 jobs:
 
-  build-and-deploy:
-    name: Build and deploy
+  test:
+    name: Test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,10 +26,10 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-#      - name: Verify
-#        run: |
-#          make empty-url-data
-#          make verify
+      - name: Verify
+        run: |
+          make empty-url-data
+          make verify
       - name: Publish to deploy branch
         run: |
           git config --global user.email leventeloki@gmail.com
@@ -36,19 +37,40 @@ jobs:
           git checkout --orphan deploy
           git commit -m "Deploy commit"
           git push origin deploy --force
-#      - name: Pull data from Google Sheets
-#        run: make src/data/urls.json
-#        env:
-#          GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
-#          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
-#      - name: Build
-#        run: make
-#      - name: 'Deploy to Netlify'
-#        uses: jsmrcaga/action-netlify-deploy@v2.0.0
-#        with:
-#          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_DEPLOY_TOKEN }}
-#          NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
-#          NETLIFY_DEPLOY_TO_PROD: true
-#          build_command: ':'
-#          install_command: ':'
-#          build_directory: 'out/'
+
+  deploy:
+    name: Test
+    if: github.ref == 'refs/heads/deploy'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+      - name: Use cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: Pull data from Google Sheets
+        run: make src/data/urls.json
+        env:
+          GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+      - name: Build
+        run: make
+      - name: 'Deploy to Netlify'
+        uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_DEPLOY_TOKEN }}
+          NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: true
+          build_command: ':'
+          install_command: ':'
+          build_directory: 'out/'
