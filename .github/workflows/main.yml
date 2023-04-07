@@ -33,10 +33,9 @@ jobs:
         run: |
           git config --global user.email leventeloki@gmail.com
           git config --global user.name Lencse
-          git checkout deploy
-          git merge --squash main
-          git commit --squash
-          git push origin deploy
+          git checkout --orphan deploy
+          git commit -m "Deploy commit"
+          git push origin deploy --force
 #      - name: Pull data from Google Sheets
 #        run: make src/data/urls.json
 #        env:
