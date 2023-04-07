@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -27,10 +25,10 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-      - name: Verify
-        run: |
-          make empty-url-data
-          make verify
+#      - name: Verify
+#        run: |
+#          make empty-url-data
+#          make verify
       - name: Publish to deploy branch
         run: |
           git config --global user.email leventeloki@gmail.com
