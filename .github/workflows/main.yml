@@ -33,6 +33,8 @@ jobs:
           make verify
       - name: Publish to deploy branch
         run: |
+          git config --global user.email leventeloki@gmail.com
+          git config --global user.name Lencse
           git checkout deploy
           git merge --squash main
           git commit --squash
