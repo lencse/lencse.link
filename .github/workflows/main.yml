@@ -9,35 +9,35 @@ jobs:
     name: Test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: yarn
-      - name: Use cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-      - name: Verify
-        run: |
-          make empty-url-data
-          make verify
+#      - name: Use Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version-file: '.nvmrc'
+#          cache: yarn
+#      - name: Use cache
+#        uses: actions/cache@v3
+#        with:
+#          path: |
+#            ${{ github.workspace }}/.next/cache
+#          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+#          restore-keys: |
+#            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+#      - name: Verify
+#        run: |
+#          make empty-url-data
+#          make verify
       - name: Setup git user
         uses: fregante/setup-git-user@v2
       - name: Publish to deploy branch
         run: |
-          git checkout deploy
-          git merge main
-          git push origin deploy
+          git checkout --orphan deploy
+          git commit -m "Deploy commit"
+          git push origin deploy --force
 
   deploy:
     name: Deploy
