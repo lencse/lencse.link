@@ -38,9 +38,9 @@ jobs:
         uses: fregante/setup-git-user@v2
       - name: Publish to deploy branch
         run: |
-          git checkout --orphan deploy
-          git commit -m "Deploy commit"
-          git push origin deploy --force
+          git checkout deploy
+          git merge main
+          git push origin deploy
 
   deploy:
     name: Deploy
