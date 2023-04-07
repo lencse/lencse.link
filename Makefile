@@ -34,8 +34,7 @@ test: node_modules
 	$(BIN)/jest --coverage
 
 out: node_modules $(URL_DATA_FILE)
-	export NODE_ENV=production
-	$(NEXT) build --no-lint
+	NODE_ENV=production $(NEXT) build
 	$(NEXT) export
 
 check-types: node_modules
