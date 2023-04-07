@@ -29,6 +29,9 @@ jobs:
         run: |
           make empty-url-data
           make verify
+      - name: Publish to deploy branch
+        run: |
+          echo Publish here
 #      - name: Pull data from Google Sheets
 #        run: make src/data/urls.json
 #        env:
