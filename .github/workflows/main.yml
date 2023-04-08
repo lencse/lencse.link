@@ -28,15 +28,22 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: yarn
-      - name: Use cache
+      - name: Use NextJS cache
         uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/.next/cache
-            ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: Use Yarn cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ hashFiles('**/package-lock.json') }}
       - name: Verify
         run: |
           make empty-url-data
@@ -78,15 +85,22 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-      - name: Use cache
+      - name: Use NextJS cache
         uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/.next/cache
-            ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: Use Yarn cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ hashFiles('**/package-lock.json') }}
       - name: Pull data from Google Sheets
         run: make src/data/urls.json
         env:
