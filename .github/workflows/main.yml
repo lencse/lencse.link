@@ -48,7 +48,9 @@ jobs:
           echo "${LAST_COMMIT_ID}\n" >> deployed_commits.txt
           git add .
           git log HEAD..main --oneline
-          git commit -m `git log HEAD..main --oneline`
+          export DEPLOYED_COMMITS=`git log HEAD..main --oneline`
+          echo $DEPLOYED_COMMITS
+          git commit -m "$DEPLOYED_COMMITS"
           git push origin deploy
 
   wait_for_previous_deploy:
