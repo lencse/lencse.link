@@ -11,7 +11,7 @@ export type Row = [string, string, string]
 
 export const googleDataFetcher = {
     getDataFromSheet: async (): Promise<Row[]> => {
-        if (getenv('USE_FAKE_DATA', 'false')) {
+        if (getenv('USE_FAKE_DATA', 'false') === 'true') {
             return [
                 ['Short URL', 'Link', 'Public'],
                 ['url', 'https://web.site', 'Y'],
