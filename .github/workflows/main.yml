@@ -13,6 +13,8 @@ jobs:
     name: Test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.SITE_URL }}
     permissions:
       actions: write
     steps:
@@ -67,6 +69,8 @@ jobs:
     needs:
       - wait_for_previous_deploy
     runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.SITE_URL }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

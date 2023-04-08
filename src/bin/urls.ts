@@ -1,4 +1,4 @@
-import { getUrls } from '../google/sheets'
+import { getUrls } from '~/google/sheets'
 import { EOL } from 'os'
 import { Console } from 'node:console'
 

@@ -5,13 +5,13 @@ import { unlinkSync, writeFileSync } from 'fs'
 import { google } from 'googleapis'
 import { strict as assert } from 'assert'
 import { Url } from '~/types/types'
-import { config } from '~/config/config'
+import { getenv } from '~/config/getenv'
 
 export type Row = [string, string, string]
 
 export const googleDataFetcher = {
     getDataFromSheet: async (): Promise<Row[]> => {
-        if (config.useFakeData) {
+        if (getenv('USE_FAKE_DATA', 'false')) {
             return [
                 ['Short URL', 'Link', 'Public'],
                 ['url', 'https://web.site', 'Y'],
@@ -19,7 +19,7 @@ export const googleDataFetcher = {
                 ['short', 'https://long.url/something', 'N'],
             ]
         }
-        const serviceAccount = config.googleServiceAccount
+        const serviceAccount = getenv('GOOGLE_SERVICE_ACCOUNT')
         const serviceAccountJson = Buffer.from(serviceAccount, 'base64').toString('utf8')
         const serviceAccountFile = resolve(tmpdir(), `${uuid()}.json`)
         writeFileSync(serviceAccountFile, serviceAccountJson)
@@ -32,7 +32,7 @@ export const googleDataFetcher = {
         const sheets = google.sheets({ version: 'v4', auth: authClient })
         const { data } = await sheets.spreadsheets.values.get({
             auth,
-            spreadsheetId: config.googleSheetId,
+            spreadsheetId: getenv('GOOGLE_SHEET_ID'),
             range: 'urls!A:C',
         })
         assert(data.majorDimension === 'ROWS')
