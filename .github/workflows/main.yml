@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -42,10 +43,12 @@ jobs:
         uses: fregante/setup-git-user@v2
       - name: Publish to deploy branch
         run: |
-          export LAST_COMMIT_MSG=`git log -1 --pretty=%B`
-          git checkout --orphan deploy
-          git commit -m "Deploy: $LAST_COMMIT_MSG"
-          git push origin deploy --force
+          export LAST_COMMIT_ID=`git rev-parse --short main`
+          export DEPLOYED_COMMITS=`git log deploy..main --oneline`
+          git checkout deploy
+          echo "${LAST_COMMIT_ID}\n" >> deployed_commits.txt
+          git commit -m "$DEPLOYED_COMMITS"
+          git push origin deploy
 
   wait_for_previous_deploy:
     name: Wait for previous deploy
