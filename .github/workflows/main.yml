@@ -47,6 +47,7 @@ jobs:
           export DEPLOYED_COMMITS=`git log deploy..main --oneline`
           git checkout deploy
           echo "${LAST_COMMIT_ID}\n" >> deployed_commits.txt
+          git add .
           git commit -m "$DEPLOYED_COMMITS"
           git push origin deploy
 
