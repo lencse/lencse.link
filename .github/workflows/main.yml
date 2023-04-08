@@ -49,7 +49,6 @@ jobs:
           git merge main --no-edit
           echo "${LAST_COMMIT_ID}\n" >> deployed_commits.txt
           git add .
-          git log HEAD..main --oneline
           git commit -m "$DEPLOYED_COMMITS"
           git push origin deploy
 
