@@ -52,14 +52,10 @@ jobs:
         uses: fregante/setup-git-user@v2
       - name: Publish to deploy branch
         run: |
-          export LAST_COMMIT_ID=`git rev-parse --short main`
-          git checkout deploy
-          export DEPLOYED_COMMITS=`git log HEAD..main --oneline`
-          git merge main --squash
-          echo "${LAST_COMMIT_ID}" >> deployed_commits.txt
-          git add .
-          git commit -m "$DEPLOYED_COMMITS"
-          git push origin deploy
+          export LAST_COMMIT_MSG=`git log -1 --pretty=%B`
+          git checkout --orphan deploy
+          git commit -m "Deploy: $LAST_COMMIT_MSG"
+          git push origin deploy --force
 
   wait_for_previous_deploy:
     name: Wait for previous deploy
