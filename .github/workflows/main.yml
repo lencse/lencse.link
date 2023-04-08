@@ -45,11 +45,10 @@ jobs:
         run: |
           export LAST_COMMIT_ID=`git rev-parse --short main`
           git checkout deploy
+          git merge main --no-edit
           echo "${LAST_COMMIT_ID}\n" >> deployed_commits.txt
           git add .
-          git log HEAD..main --oneline
           export DEPLOYED_COMMITS=`git log HEAD..main --oneline`
-          echo $DEPLOYED_COMMITS
           git commit -m "$DEPLOYED_COMMITS"
           git push origin deploy
 
