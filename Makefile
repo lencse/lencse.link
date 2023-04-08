@@ -12,10 +12,11 @@ NEXT=$(BIN)/next
 TSNODE=$(BIN)/ts-node -r alias-hq/init
 URL_DATA_FILE=src/data/urls.json
 REDIRECTS_FILE=out/_redirects
+QR=public/img/qr
 
 export
 
-default: out $(REDIRECTS_FILE)
+default: out $(REDIRECTS_FILE) $(QR)
 
 node_modules: package.json yarn.lock
 	yarn --frozen-lockfile
@@ -33,7 +34,7 @@ verify: lint check-types test
 test: node_modules
 	$(BIN)/jest --coverage
 
-out: node_modules $(URL_DATA_FILE)
+out: node_modules $(URL_DATA_FILE) $(QR)
 	NODE_ENV=production $(NEXT) build
 	$(NEXT) export
 
@@ -45,10 +46,11 @@ check-types: node_modules
 
 dev: node_modules .tmp
 	$(BIN)/concurrently \
-		-n urls,redirects,next.js \
-		-c bgBlue.white,bgGreen.white,bgBlack.yellow \
+		-n urls,redirects,qr,next.js \
+		-c bgBlue.black,bgGreen.black,bgMagenta.black,bgBlack.yellow \
 		"$(BIN)/nodemon --config nodemon.urls.json" \
 		"$(BIN)/nodemon --config nodemon.redirects.json" \
+		"$(BIN)/nodemon --config nodemon.qr.json" \
 		"$(NEXT) dev"
 
 .env: .env.development
@@ -70,3 +72,6 @@ $(URL_DATA_FILE): node_modules
 
 $(REDIRECTS_FILE): out $(URL_DATA_FILE)
 	bin/run.sh src/bin/redirects.ts | tee $(REDIRECTS_FILE)
+
+$(QR): $(URL_DATA_FILE)
+	bin/run.sh src/bin/qr.ts
