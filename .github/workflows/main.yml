@@ -49,7 +49,6 @@ jobs:
           git add .
           git log HEAD..main --oneline
           export DEPLOYED_COMMITS=`git log HEAD..main --oneline`
-          echo $DEPLOYED_COMMITS
           git commit -m "$DEPLOYED_COMMITS"
           git push origin deploy
 
