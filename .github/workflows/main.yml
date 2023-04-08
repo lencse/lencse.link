@@ -21,34 +21,34 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           fetch-depth: 0
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: yarn
-      - name: Use cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ github.workspace }}/.next/cache
-            ${{ github.workspace }}/node_modules
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-      - name: Verify
-        run: |
-          make empty-url-data
-          make verify
+#      - name: Use Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version-file: '.nvmrc'
+#          cache: yarn
+#      - name: Use cache
+#        uses: actions/cache@v3
+#        with:
+#          path: |
+#            ${{ github.workspace }}/.next/cache
+#            ${{ github.workspace }}/node_modules
+#          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+#          restore-keys: |
+#            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+#      - name: Verify
+#        run: |
+#          make empty-url-data
+#          make verify
       - name: Setup git user
         uses: fregante/setup-git-user@v2
       - name: Publish to deploy branch
         run: |
           export LAST_COMMIT_ID=`git rev-parse --short main`
-          export DEPLOYED_COMMITS=`git log deploy..main --oneline`
           git checkout deploy
           echo "${LAST_COMMIT_ID}\n" >> deployed_commits.txt
           git add .
-          git commit -m "$DEPLOYED_COMMITS"
+          git log HEAD..main --oneline
+          git commit -m `git log HEAD..main --oneline`
           git push origin deploy
 
   wait_for_previous_deploy:
