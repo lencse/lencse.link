@@ -10,4 +10,4 @@
 *.yml
 *.md
 
-/data
+/src/data/urls.json
