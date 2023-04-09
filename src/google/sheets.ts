@@ -17,6 +17,68 @@ export const googleDataFetcher = {
                 ['url', 'https://web.site', 'Y'],
                 ['link', 'https://website.to', 'Y'],
                 ['short', 'https://long.url/something', 'N'],
+                [
+                    'long-url-is-long',
+                    [
+                        'https://long.url/something?id=',
+                        '95bdedab-618d-4ca1-81bf-3b96e4eba1f8-',
+                        '8a7050cf-c1ed-4832-a591-ec194a7915fe-',
+                        '15d48ba0-a072-4934-8af7-10c704750601',
+                    ].join(''),
+                    'Y',
+                ],
+                ['url', 'https://web.site', 'Y'],
+                ['link', 'https://website.to', 'Y'],
+                ['short', 'https://long.url/something', 'N'],
+                [
+                    'long-url-is-long',
+                    [
+                        'https://long.url/something?id=',
+                        '95bdedab-618d-4ca1-81bf-3b96e4eba1f8-',
+                        '8a7050cf-c1ed-4832-a591-ec194a7915fe-',
+                        '15d48ba0-a072-4934-8af7-10c704750601',
+                    ].join(''),
+                    'Y',
+                ],
+                ['url', 'https://web.site', 'Y'],
+                ['link', 'https://website.to', 'Y'],
+                ['short', 'https://long.url/something', 'N'],
+                [
+                    'long-url-is-long',
+                    [
+                        'https://long.url/something?id=',
+                        '95bdedab-618d-4ca1-81bf-3b96e4eba1f8-',
+                        '8a7050cf-c1ed-4832-a591-ec194a7915fe-',
+                        '15d48ba0-a072-4934-8af7-10c704750601',
+                    ].join(''),
+                    'Y',
+                ],
+                ['url', 'https://web.site', 'Y'],
+                ['link', 'https://website.to', 'Y'],
+                ['short', 'https://long.url/something', 'N'],
+                [
+                    'long-url-is-long',
+                    [
+                        'https://long.url/something?id=',
+                        '95bdedab-618d-4ca1-81bf-3b96e4eba1f8-',
+                        '8a7050cf-c1ed-4832-a591-ec194a7915fe-',
+                        '15d48ba0-a072-4934-8af7-10c704750601',
+                    ].join(''),
+                    'Y',
+                ],
+                ['url', 'https://web.site', 'Y'],
+                ['link', 'https://website.to', 'Y'],
+                ['short', 'https://long.url/something', 'N'],
+                [
+                    'long-url-is-long',
+                    [
+                        'https://long.url/something?id=',
+                        '95bdedab-618d-4ca1-81bf-3b96e4eba1f8-',
+                        '8a7050cf-c1ed-4832-a591-ec194a7915fe-',
+                        '15d48ba0-a072-4934-8af7-10c704750601',
+                    ].join(''),
+                    'Y',
+                ],
             ]
         }
         const serviceAccount = getenv('GOOGLE_SERVICE_ACCOUNT')
