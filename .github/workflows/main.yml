@@ -96,6 +96,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-yarn-${{ hashFiles('**/package-lock.json') }}
+      - run: "ls -la node_modules/ || :"
       - name: Pull data from Google Sheets
         run: make src/data/urls.json
         env:
