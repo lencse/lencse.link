@@ -10,7 +10,7 @@ export const Screen: FC<{ className?: string; extend?: boolean; children?: React
                 flex: !extend,
                 'h-screen': !extend,
             },
-            'md:flex md:h-screen',
+            'md:flex md:h-screen min-h-screen',
             className
         )}
     >
