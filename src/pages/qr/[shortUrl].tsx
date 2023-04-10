@@ -37,6 +37,7 @@ export default function Qr({ url }: props) {
         <Page title={`lencse.link: /${url.shortUrl}`}>
             <Screen className="bg-black text-white">
                 <section className="m-auto py-16 px-8 text-center">
+                    <h2 className="text-xs mb-8">{`${config.siteUrl}/${url.shortUrl}`}</h2>
                     <Image
                         src={`/img/qr/${url.shortUrl}.png`}
                         alt={`QR code for ${config.siteUrl}/${url.shortUrl}`}

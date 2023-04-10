@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { urls } from '~/data/data'
 import { Page } from '~/components/layout/page'
 import { Screen } from '~/components/layout/screen'
+import { HoveredLink } from '~/components/link'
 
 export default function Home() {
     return (
@@ -38,13 +39,15 @@ export default function Home() {
                                             <td className="pl-2 pr-6 py-6 font-bold">
                                                 /{url.shortUrl}
                                             </td>
-                                            {/*<td className="pl-6 pr-12 py-6 max-w-lg truncate">*/}
-                                            {/*    <Link href={url.link} title={url.link}>*/}
-                                            {/*        {url.link}*/}
-                                            {/*    </Link>*/}
-                                            {/*</td>*/}
+                                            <td className="pl-6 pr-12 py-6 max-w-lg truncate">
+                                                <HoveredLink href={url.link} title={url.link}>
+                                                    {url.link}
+                                                </HoveredLink>
+                                            </td>
                                             <td className="pl-12 pr-2 py-6">
-                                                <Link href={`/qr/${url.shortUrl}`}>QR</Link>
+                                                <HoveredLink href={`/qr/${url.shortUrl}`}>
+                                                    QR
+                                                </HoveredLink>
                                             </td>
                                         </tr>
                                     ))}
