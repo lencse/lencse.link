@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import { FunctionComponentFactory } from 'react'
+import { FC, ReactNode } from 'react'
 
-export const Page: FunctionComponentFactory<{ title: string }> = ({ title, children }) => (
+export const Page: FC<{ title: string; children?: ReactNode }> = ({ title, children }) => (
     <>
         <Head>
             <title>{title}</title>

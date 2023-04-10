@@ -11,7 +11,13 @@ export default function Home() {
             <Screen className="bg-white text-black">
                 <section className="m-auto p-4">
                     <h1 className="mb-16">
-                        <Image src="/img/logo.svg" alt="lencse.link" width="800" height="400" />
+                        <Image
+                            src="/img/logo.svg"
+                            alt="lencse.link"
+                            width="800"
+                            height="400"
+                            priority={true}
+                        />
                     </h1>
                     <p className="text-base text-center">A personal url shortener</p>
                 </section>
@@ -32,11 +38,11 @@ export default function Home() {
                                             <td className="pl-2 pr-6 py-6 font-bold">
                                                 /{url.shortUrl}
                                             </td>
-                                            <td className="pl-6 pr-12 py-6 max-w-lg truncate">
-                                                <Link href={url.link} title={url.link}>
-                                                    {url.link}
-                                                </Link>
-                                            </td>
+                                            {/*<td className="pl-6 pr-12 py-6 max-w-lg truncate">*/}
+                                            {/*    <Link href={url.link} title={url.link}>*/}
+                                            {/*        {url.link}*/}
+                                            {/*    </Link>*/}
+                                            {/*</td>*/}
                                             <td className="pl-12 pr-2 py-6">
                                                 <Link href={`/qr/${url.shortUrl}`}>QR</Link>
                                             </td>
