@@ -20,7 +20,6 @@ default: out $(REDIRECTS_FILE) $(QR)
 
 node_modules: package.json yarn.lock
 	yarn --frozen-lockfile
-	touch node_modules
 
 format-code: node_modules
 	$(PRETTIER) --write .
