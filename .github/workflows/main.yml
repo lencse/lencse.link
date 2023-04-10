@@ -42,7 +42,6 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
-      - run: "ls -la node_modules/ || :"
       - name: Verify
         run: |
           make empty-url-data
@@ -96,7 +95,6 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
-      - run: "ls -la node_modules/ || :"
       - name: Pull data from Google Sheets
         run: make src/data/urls.json
         env:
