@@ -64,7 +64,7 @@ export default function Home() {
                                     <div className="flex-auto">
                                         <h3 className="font-bold mb-2">/{url.shortUrl}</h3>
                                         <HoveredLink
-                                            className="break-all"
+                                            className="block break-all p-4"
                                             href={url.link}
                                             title={url.link}
                                         >
