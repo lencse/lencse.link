@@ -57,13 +57,17 @@ export default function Home() {
                             </tbody>
                         </table>
                     </div>
-                    <div className="md:hidden">
+                    <div className="md:hidden text-sm">
                         <ul className="text-left">
                             {urlComponents((url, index) => (
                                 <li key={index} className="mb-8 flex">
                                     <div className="flex-auto">
                                         <h3 className="font-bold mb-2">/{url.shortUrl}</h3>
-                                        <HoveredLink className='break-all' href={url.link} title={url.link}>
+                                        <HoveredLink
+                                            className="break-all"
+                                            href={url.link}
+                                            title={url.link}
+                                        >
                                             {url.link}
                                         </HoveredLink>
                                     </div>
