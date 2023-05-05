@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { urls } from '~/data/data'
 import { Page } from '~/components/layout/page'
 import { Screen } from '~/components/layout/screen'
-import { HoveredLink } from '~/components/link'
+import { StyledLink } from '~/components/link'
 import { Url } from '~/types/types'
 import { ReactNode } from 'react'
 
@@ -43,14 +43,12 @@ export default function Home() {
                                             /{url.shortUrl}
                                         </td>
                                         <td className="pl-6 pr-12 py-6 max-w-lg truncate">
-                                            <HoveredLink href={url.link} title={url.link}>
+                                            <StyledLink href={url.link} title={url.link}>
                                                 {url.link}
-                                            </HoveredLink>
+                                            </StyledLink>
                                         </td>
                                         <td className="pl-12 pr-2 py-6">
-                                            <HoveredLink href={`/qr/${url.shortUrl}`}>
-                                                QR
-                                            </HoveredLink>
+                                            <StyledLink href={`/qr/${url.shortUrl}`}>QR</StyledLink>
                                         </td>
                                     </tr>
                                 ))}
@@ -63,20 +61,20 @@ export default function Home() {
                                 <li key={index} className="mb-8 flex">
                                     <div className="flex-auto">
                                         <h3 className="font-bold mb-2">/{url.shortUrl}</h3>
-                                        <HoveredLink
+                                        <StyledLink
                                             className="block break-all p-4"
                                             href={url.link}
                                             title={url.link}
                                         >
                                             {url.link}
-                                        </HoveredLink>
+                                        </StyledLink>
                                     </div>
-                                    <HoveredLink
+                                    <StyledLink
                                         className="flex-none w-min ml-4 overflow-hidden"
                                         href={`/qr/${url.shortUrl}`}
                                     >
                                         QR
-                                    </HoveredLink>
+                                    </StyledLink>
                                 </li>
                             ))}
                         </ul>

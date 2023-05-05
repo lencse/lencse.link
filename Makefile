@@ -51,7 +51,7 @@ dev: node_modules .tmp
 		"$(BIN)/nodemon --config nodemon.urls.json" \
 		"$(BIN)/nodemon --config nodemon.redirects.json" \
 		"$(BIN)/nodemon --config nodemon.qr.json" \
-		"$(NEXT) dev"
+		"$(NEXT) dev --port 1800"
 
 .env: .env.development
 	cp .env.development .env
