@@ -38,7 +38,9 @@ export default function Qr({ url }: props) {
             <Screen className="bg-black text-white">
                 <section className="m-auto py-16 px-8 text-center">
                     <h2 className="text-xs mb-8">
-                        <a href={`${config.siteUrl}/${url.shortUrl}`}>`${config.siteUrl}/${url.shortUrl}`</a>
+                        <a href={`${config.siteUrl}/${url.shortUrl}`}>
+                            {`${config.siteUrl}/${url.shortUrl}`}
+                        </a>
                     </h2>
                     <Image
                         src={`/img/qr/${url.shortUrl}.png`}
