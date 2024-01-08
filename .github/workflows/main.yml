@@ -1,5 +1,8 @@
 name: Node.js CI
 
+concurrency:
+  group: ${{ github.workflow }}
+
 on:
   push:
     branches:
@@ -55,20 +58,9 @@ jobs:
           git commit -m "Deploy: $LAST_COMMIT_MSG"
           git push origin deploy --force
 
-  wait_for_previous_deploy:
-    name: Wait for previous deploy
-    if: github.ref == 'refs/heads/deploy'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: mktcode/consecutive-workflow-action@eb43c6b5852dd0e33efa797a1817196d06daa4b2
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-
   deploy:
     name: Deploy
     if: github.ref == 'refs/heads/deploy'
-    needs:
-      - wait_for_previous_deploy
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
