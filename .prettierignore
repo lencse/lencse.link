@@ -1,0 +1,13 @@
+/node_modules
+
+/.next
+.env
+
+/out
+
+/logs
+
+*.yml
+*.md
+
+/src/data/urls.json
