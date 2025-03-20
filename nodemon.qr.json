@@ -1,0 +1,7 @@
+{
+    "watch": ["src", ".env", "bin"],
+    "ignore": ["src/bin/urls.ts", "src/bin/redirects.ts"],
+    "ext": "ts,json,sh",
+    "exec": "bin/run.sh src/bin/qr.ts",
+    "delay": 1000
+}
